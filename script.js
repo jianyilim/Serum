@@ -24,6 +24,57 @@ const colors = [
     { name: 'Zinc', hex: '#71717A', tailwind: 'zinc' },
 ];
 
+const palettes = {
+    modern: {
+        name: "Modern",
+        colors: ["#3B82F6", "#F3F4F6", "#1F2937"],
+        desc: "Blue, Gray, Dark",
+        prompt: "Use the modern palette for a clean, professional appearance with supporting colors of gray-100, gray-800, and blue-600."
+    },
+    vibrant: {
+        name: "Vibrant",
+        colors: ["#F472B6", "#FACC15", "#60A5FA"],
+        desc: "Pink, Yellow, Blue",
+        prompt: "Use the vibrant palette for creative energy with supporting colors including purple-500, pink-400, yellow-400, and green-400."
+    },
+    earth: {
+        name: "Earth",
+        colors: ["#D97706", "#F97316", "#15803D"],
+        desc: "Amber, Orange, Green",
+        prompt: "Use the earth palette for warmth and natural feel with supporting colors including amber-600, orange-500, and green-700."
+    },
+    monochrome: {
+        name: "Monochrome",
+        colors: ["#111827", "#6B7280", "#D1D5DB"],
+        desc: "Black, Gray, Light Gray",
+        prompt: "Use the monochrome palette for elegant simplicity with supporting colors of gray-900, gray-700, gray-500, and gray-300."
+    },
+    nature: {
+        name: "Nature",
+        colors: ["#166534", "#A16207", "#FEF3C7"],
+        desc: "Forest Green, Wood, Cream",
+        prompt: "Use the nature palette for an organic, grounded feel with supporting colors including forest green, wood brown, and soft cream."
+    },
+    ocean: {
+        name: "Ocean",
+        colors: ["#0E7490", "#06B6D4", "#E0F2FE"],
+        desc: "Deep Teal, Cyan, Light Blue",
+        prompt: "Use the ocean palette for a calming, aquatic atmosphere with supporting colors including deep teal, bright cyan, and light blue."
+    },
+    sunset: {
+        name: "Sunset",
+        colors: ["#7C3AED", "#DB2777", "#F97316"],
+        desc: "Violet, Pink, Orange",
+        prompt: "Use the sunset palette for a warm, dramatic effect with supporting colors including violet, vibrant pink, and orange."
+    },
+    pastel: {
+        name: "Pastel",
+        colors: ["#F9A8D4", "#FDE047", "#A5F3FC"],
+        desc: "Soft Pink, Yellow, Mint",
+        prompt: "Use the pastel palette for a soft, playful aesthetic with supporting colors including soft pink, light yellow, and mint green."
+    }
+};
+
 const visualStyles = {
     glassmorphism: "Ensure a Glassmorphism aesthetic. Use translucent backgrounds with backdrop-filter blur to create depth and hierarchy. Maintain a clean, premium look with subtle white borders and soft shadows.",
     clean: "Focus on a Clean and Minimalist design. Use ample white space, clear typography, and a restrained color palette to maximize content readability and reduce cognitive load.",
@@ -31,7 +82,8 @@ const visualStyles = {
     outline: "Use an Outline design style. Transparent backgrounds with visible borders. Focus on crisp lines and structural hierarchy to create a modern, airy interface.",
     material: "Follow Material Design guidelines. Use elevation (shadows) to convey hierarchy and depth. Implement ripple effects for interactions and stick to standard grid layouts.",
     brutalist: "Use a Brutalist design style. Employ bold, raw, and geometric elements. Use high-contrast borders, monospaced fonts, and non-traditional layouts to create a striking, artistic impact.",
-    neumorphism: "Implement Neumorphism (Soft UI). Create elements that appear to be extruded from the background using soft, multiple shadows (light and dark) to create a tactile, plastic-like feel."
+    neumorphism: "Implement Neumorphism (Soft UI). Create elements that appear to be extruded from the background using soft, multiple shadows (light and dark) to create a tactile, plastic-like feel.",
+    claymorphism: "Apply Claymorphism (Clay UI). Create a friendly, 3D extruded look using inflated rounded shapes, soft inner shadows, and vibrant pastel colors. Elements should look tactile and squishy."
 };
 
 const themes = {
@@ -42,9 +94,9 @@ const themes = {
 
 const typographyConfig = {
     families: {
-        sans: "Inter",
-        serif: "Playfair Display",
-        mono: "JetBrains Mono",
+        sans: "Sans-serif (Suggest one of: Inter, Geist, Manrope, Plus Jakarta Sans)",
+        serif: "Serif (Suggest one of: Merriweather, IBM Plex Serif, Libre Baskerville)",
+        mono: "Monospace (Suggest one of: Geist Mono, IBM Plex Mono, JetBrains Mono)",
         display: "Oswald",
         grotesque: "Bricolage Grotesque"
     },
@@ -59,9 +111,14 @@ const typographyConfig = {
         body: "0em",
         caps: "0.05em"
     }
-};
+};;
 
 const fontPairings = {
+    none: {
+        name: "None",
+        fonts: "Single Typeface",
+        prompt: ""
+    },
     classic: {
         name: "Serif + Sans-Serif",
         fonts: "Playfair Display + Inter",
@@ -110,7 +167,9 @@ const projectPresets = {
         spacingBody: "0em",
         spacingCaps: "0.02em",
         // Specific Requirements
-        specificRequirements: "Ensure the design is professional, accessible with WCAG AA compliance, and follows current UI/UX best practices with proper contrast ratios and responsive behavior. Include subtle micro-interactions and smooth transitions between states."
+        specificRequirements: "Ensure the design is professional, accessible with WCAG AA compliance, and follows current UI/UX best practices with proper contrast ratios and responsive behavior. Include subtle micro-interactions and smooth transitions between states.",
+        // Animation Settings
+        animation: { intensity: 'subtle', card: '', button: '', entrance: 'fade-up', easing: 'ease-out', duration: 'normal' }
     },
     editorial: {
         name: "Editorial Blog",
@@ -142,7 +201,9 @@ const projectPresets = {
         spacingBody: "0em",
         spacingCaps: "0.05em",
         // Specific Requirements
-        specificRequirements: "Ensure the design prioritizes content readability with excellent typography hierarchy, generous white space, and WCAG AAA contrast compliance. Focus on clean lines, ample spacing, and distraction-free reading experience with subtle interactive elements. Use a max-width of 680px for text containers to improve readability."
+        specificRequirements: "Ensure the design prioritizes content readability with excellent typography hierarchy, generous white space, and WCAG AAA contrast compliance. Focus on clean lines, ample spacing, and distraction-free reading experience with subtle interactive elements. Use a max-width of 680px for text containers to improve readability.",
+        // Animation Settings
+        animation: { intensity: 'minimal', card: '', button: '', entrance: 'none', easing: 'ease-in-out', duration: 'normal' }
     },
     saas: {
         name: "Tech Startup / SaaS",
@@ -175,7 +236,9 @@ const projectPresets = {
         spacingBody: "0em",
         spacingCaps: "0.02em",
         // Specific Requirements
-        specificRequirements: "Create a modern SaaS application with glassmorphism design using an adaptive theme that responds to system preferences. Ensure the design is professional, accessible with WCAG AA compliance, and follows current UI/UX best practices with proper contrast ratios and responsive behavior. Include subtle micro-interactions and smooth transitions between states. Use vibrant blue (#3B82F6) for interactive elements."
+        specificRequirements: "Create a modern SaaS application with glassmorphism design using an adaptive theme that responds to system preferences. Ensure the design is professional, accessible with WCAG AA compliance, and follows current UI/UX best practices with proper contrast ratios and responsive behavior. Include subtle micro-interactions and smooth transitions between states. Use vibrant blue (#3B82F6) for interactive elements.",
+        // Animation Settings
+        animation: { intensity: 'subtle', card: 'staggered', button: 'scale-color', entrance: 'fade-up', easing: 'spring', duration: 'normal' }
     },
     ecommerce: {
         name: "E-commerce Store",
@@ -208,7 +271,9 @@ const projectPresets = {
         spacingBody: "0em",
         spacingCaps: "0.02em",
         // Specific Requirements
-        specificRequirements: "Design a mobile-first app interface with iOS-style design using rounded corners. Ensure the design feels native with proper spacing, readable typography, and accessible color contrast ratios above 4.5:1. Include loading states, error handling, and success feedback with appropriate semantic colors. Use large touch targets (44px minimum) and thumb-friendly navigation."
+        specificRequirements: "Design a mobile-first app interface with iOS-style design using rounded corners. Ensure the design feels native with proper spacing, readable typography, and accessible color contrast ratios above 4.5:1. Include loading states, error handling, and success feedback with appropriate semantic colors. Use large touch targets (44px minimum) and thumb-friendly navigation.",
+        // Animation Settings
+        animation: { intensity: 'subtle', card: 'hover-scale', button: 'ripple', entrance: 'slide-in', easing: 'ease-out', duration: 'fast' }
     },
     portfolio: {
         name: "Creative Portfolio",
@@ -241,7 +306,9 @@ const projectPresets = {
         spacingBody: "0.01em",
         spacingCaps: "0.1em",
         // Specific Requirements
-        specificRequirements: "Ensure the design is memorable and artistic while maintaining basic accessibility standards. Include bold typography, asymmetrical layouts, and striking visual elements that showcase creative work effectively. Use dramatic extra-large shadows for maximum visual impact and artistic flair."
+        specificRequirements: "Ensure the design is memorable and artistic while maintaining basic accessibility standards. Include bold typography, asymmetrical layouts, and striking visual elements that showcase creative work effectively. Use dramatic extra-large shadows for maximum visual impact and artistic flair.",
+        // Animation Settings
+        animation: { intensity: 'expressive', card: 'tilt', button: 'pulse', entrance: 'fade-up', easing: 'spring', duration: 'slow' }
     },
     gaming: {
         name: "Gaming Community",
@@ -272,13 +339,141 @@ const projectPresets = {
         spacingBody: "0em",
         spacingCaps: "0.05em",
         // Specific Requirements
-        specificRequirements: "Design a platform with neumorphic design using soft, extruded plastic-like appearance for a tactile, engaging feel. Ensure the design appeals to audiences with high contrast for visibility, customizable themes, and engaging visual feedback. Include animated elements, achievement displays, and community features that enhance the experience."
+        specificRequirements: "Design a platform with neumorphic design using soft, extruded plastic-like appearance for a tactile, engaging feel. Ensure the design appeals to audiences with high contrast for visibility, customizable themes, and engaging visual feedback. Include animated elements, achievement displays, and community features that enhance the experience.",
+        // Animation Settings
+        animation: { intensity: 'expressive', card: 'staggered', button: 'ripple', entrance: 'slide-in', easing: 'spring', duration: 'normal' }
     }
 };
 
 // Layout & Animation (General Best Practices to append)
 const layoutGuide = "Layout: Adopt a mobile-first approach. Start with single-column layouts for mobile (<640px) and expand to multi-column grids for tablet (768px) and desktop (1024px+). Use consistent spacing (multiples of 4px) and ensure touch targets are at least 44px.";
+
+// Animation Builder Options (Comprehensive based on ui-guide)
+const animationBuilderOptions = {
+    intensity: {
+        minimal: {
+            name: "Minimal",
+            prompt: "Use minimal animations. Keep motion subtle and restrained - only essential feedback animations. Prefer opacity transitions over movement. Respect users who prefer reduced motion."
+        },
+        subtle: {
+            name: "Subtle",
+            prompt: "Use subtle, refined micro-interactions. Animations should enhance without distracting. Use smooth transitions (200-300ms) with ease-out timing for natural feel. Include hover states and focus indicators."
+        },
+        expressive: {
+            name: "Expressive",
+            prompt: "Use expressive, dynamic animations. Include dramatic entrance effects, playful hover states, and creative transitions. Longer durations (400-600ms) acceptable for impact. Use spring-based easing for organic movement."
+        }
+    },
+    cardAnimations: {
+        "hover-scale": {
+            name: "Hover Scale",
+            prompt: "Add a hover effect to cards that scales them to 1.05x size with a subtle shadow increase. Use a smooth 300ms transition with ease-out timing. Shadow should deepen on hover (e.g., shadow-lg to shadow-xl)."
+        },
+        tilt: {
+            name: "3D Tilt",
+            prompt: "Create a 3D tilt effect for cards that responds to cursor position. Maximum rotation of 10 degrees on both axes. Add a subtle shadow that shifts with the tilt angle. Include perspective parent container."
+        },
+        staggered: {
+            name: "Staggered Entrance",
+            prompt: "Implement a staggered entrance animation for cards. Each card fades in (opacity 0→1) and moves up (translateY 20px→0) with a 100ms delay between each card. Use ease-out timing function."
+        },
+        flip: {
+            name: "Flip Card",
+            prompt: "Create flip cards that rotate 180 degrees on Y-axis on hover to reveal back-side content. Use backface-visibility: hidden and transform-style: preserve-3d. Smooth 600ms transition."
+        }
+    },
+    buttonAnimations: {
+        "scale-color": {
+            name: "Scale & Color",
+            prompt: "Create buttons that scale to 1.05x and shift to a lighter/darker shade on hover (e.g., blue-500 to blue-600). Include a slight translateY(-2px) lift effect. Use 250ms transition duration."
+        },
+        ripple: {
+            name: "Ripple",
+            prompt: "Add a Material Design-inspired ripple effect. On click, a circular gradient expands from the click point outward with a subtle fade-out. Use radial-gradient and scale transform."
+        },
+        "icon-slide": {
+            name: "Icon Slide",
+            prompt: "Create buttons where text slides left and an arrow icon appears from the right on hover. Use overflow: hidden and transform: translateX() for smooth slide. 300ms transition."
+        },
+        pulse: {
+            name: "Pulse",
+            prompt: "Add a pulsing glow effect around CTA buttons. Use box-shadow with keyframe animation that expands (scale 1→1.2) and fades (opacity 1→0) repeatedly. Draw attention to important actions."
+        }
+    },
+    entranceAnimations: {
+        none: {
+            name: "None",
+            prompt: "No page entrance animations. Content appears immediately on load for fastest perceived performance."
+        },
+        "fade-up": {
+            name: "Fade Up",
+            prompt: "Elements fade in while moving up on page load. Start with opacity: 0 and translateY(20px), animate to opacity: 1 and translateY(0). Stagger children with 50-100ms delays. Use ease-out timing."
+        },
+        "slide-in": {
+            name: "Slide In",
+            prompt: "Elements slide in from the sides on page load. Use translateX(-100px) or translateX(100px) as starting position. Alternate slide direction for visual interest. 400-600ms duration."
+        }
+    },
+    easing: {
+        linear: {
+            name: "Linear",
+            css: "linear",
+            prompt: "Use linear timing function for constant speed animations. Best for looping animations or progress indicators."
+        },
+        "ease-out": {
+            name: "Ease Out",
+            css: "ease-out",
+            prompt: "Use ease-out timing (cubic-bezier(0, 0, 0.58, 1)). Animations start fast and slow down at the end. Best for elements entering the view - feels natural and quick."
+        },
+        "ease-in-out": {
+            name: "Ease In-Out",
+            css: "ease-in-out",
+            prompt: "Use ease-in-out timing (cubic-bezier(0.42, 0, 0.58, 1)). Smooth acceleration and deceleration. Best for elements moving on-screen or state transitions."
+        },
+        spring: {
+            name: "Spring",
+            css: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+            prompt: "Use spring-based easing (cubic-bezier(0.34, 1.56, 0.64, 1)). Creates an elastic overshoot effect. Best for playful interfaces and attention-grabbing interactions."
+        }
+    },
+    duration: {
+        fast: {
+            name: "Fast",
+            range: "150-200ms",
+            prompt: "Use fast durations (150-200ms). Best for micro-interactions, button hovers, and tooltip appearances. Feels snappy and responsive."
+        },
+        normal: {
+            name: "Normal",
+            range: "250-350ms",
+            prompt: "Use standard durations (250-350ms). Balanced speed for most UI animations. Good for card hovers, dropdown menus, and modal appearances."
+        },
+        slow: {
+            name: "Slow",
+            range: "400-600ms",
+            prompt: "Use slower durations (400-600ms). Best for page transitions, dramatic emphasis, and complex multi-step animations. Feel deliberate and cinematic."
+        }
+    }
+};
+
+// Fallback simple animation guide for when no specific selections are made
 const animationGuide = "Animation: Implement subtle micro-interactions. Use 'transform' and 'opacity' for distinct hover states (e.g., scale 1.05x). Add staggered entrance animations for lists and cards using ease-out timing.";
+
+const professionalRules = `
+**Professional UI/UX Standards (Critical)**
+- **Icons**: Use SVG icons (e.g., Lucide, Heroicons) with consistent 24x24 sizing (w-6 h-6). **NEVER use emojis as icons**.
+- **Interaction Design**: 
+  - Add \`cursor-pointer\` to ALL clickable elements (cards, list items, buttons).
+  - Use \`transition-all duration-200\` for smooth state changes.
+  - Ensure hover states (scale, color) do NOT cause layout shifts.
+- **Visual Polish**:
+  - Use specific brand colors (e.g., \`bg-blue-600\`) rather than raw hex values where possible.
+  - Light Mode: Use \`slate-900\` for headings, \`slate-600\` for body. Avoid pure black.
+  - Dark Mode: Use \`slate-900\` or \`zinc-950\` backgrounds. Text should be \`slate-200\` (not pure white) for less eye strain.
+  - Glassmorphism: In light mode, use \`bg-white/80\` or higher opacity to ensure text legibility.
+- **Layout & Spacing**:
+  - Use \`max-w-7xl\` or \`container mx-auto\` for consistent page width.
+  - Ensure floating elements (navbars) have proper spacing from edges (\`top-4 left-4 right-4\`).
+`;
 
 // Layout Builder Options
 const layoutBuilderOptions = {
@@ -330,10 +525,12 @@ const cssMapping = {
 document.addEventListener('DOMContentLoaded', () => {
     initPresetPicker(); // Initialize project type presets
     initLayoutBuilder(); // Initialize new layout prompt builder
+    initAnimationBuilder(); // Initialize animation builder
     initColorPicker();
     initCustomSelectors(); // Initialize custom card selectors
     initCollapsibles(); // Initialize collapsible sections
     initAnimations(); // Initialize staggered animations
+    initAppTheme(); // Initialize app-wide dark mode toggle
 
     document.getElementById('regenerate-btn').addEventListener('click', generatePrompt);
     document.getElementById('copy-btn').addEventListener('click', copyToClipboard);
@@ -417,28 +614,28 @@ function updateLayoutBuilderVisuals() {
             const label = opt.querySelector('span');
 
             if (isSelected) {
-                opt.classList.remove('border-gray-200', 'bg-white', 'hover:border-pink-500/50');
-                opt.classList.add('border-pink-500', 'bg-pink-50', 'shadow-sm');
+                opt.classList.remove('border-gray-200', 'dark:border-gray-700', 'bg-white', 'dark:bg-gray-800', 'hover:border-pink-500/50');
+                opt.classList.add('border-pink-500', 'bg-pink-50', 'dark:bg-pink-900/20', 'shadow-sm');
 
                 if (iconWrapper) {
-                    iconWrapper.classList.remove('bg-gray-100', 'text-gray-500');
-                    iconWrapper.classList.add('bg-pink-100', 'text-pink-600');
+                    iconWrapper.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+                    iconWrapper.classList.add('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
                 }
                 if (label) {
-                    label.classList.remove('text-gray-700');
-                    label.classList.add('text-pink-600');
+                    label.classList.remove('text-gray-700', 'dark:text-gray-400');
+                    label.classList.add('text-pink-600', 'dark:text-pink-400');
                 }
             } else {
-                opt.classList.remove('border-pink-500', 'bg-pink-50', 'shadow-sm');
-                opt.classList.add('border-gray-200', 'bg-white', 'hover:border-pink-500/50');
+                opt.classList.remove('border-pink-500', 'bg-pink-50', 'dark:bg-pink-900/20', 'shadow-sm');
+                opt.classList.add('border-gray-200', 'dark:border-gray-700', 'bg-white', 'dark:bg-gray-800', 'hover:border-pink-500/50');
 
                 if (iconWrapper) {
-                    iconWrapper.classList.remove('bg-pink-100', 'text-pink-600');
-                    iconWrapper.classList.add('bg-gray-100', 'text-gray-500');
+                    iconWrapper.classList.remove('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
+                    iconWrapper.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
                 }
                 if (label) {
-                    label.classList.remove('text-pink-600');
-                    label.classList.add('text-gray-700');
+                    label.classList.remove('text-pink-600', 'dark:text-pink-400');
+                    label.classList.add('text-gray-700', 'dark:text-gray-400');
                 }
             }
         });
@@ -476,6 +673,185 @@ function getLayoutPrompt() {
     return prompt.trim();
 }
 
+// Initialize Animation Builder
+function initAnimationBuilder() {
+    const intensityOptions = document.querySelectorAll('.animation-option[data-type="intensity"]');
+    const cardOptions = document.querySelectorAll('.animation-option[data-type="card"]');
+    const buttonOptions = document.querySelectorAll('.animation-option[data-type="button"]');
+    const entranceOptions = document.querySelectorAll('.animation-option[data-type="entrance"]');
+    const easingOptions = document.querySelectorAll('.animation-option[data-type="easing"]');
+    const durationOptions = document.querySelectorAll('.animation-option[data-type="duration"]');
+
+    const intensityInput = document.getElementById('animation-intensity');
+    const cardInput = document.getElementById('animation-card');
+    const buttonInput = document.getElementById('animation-button');
+    const entranceInput = document.getElementById('animation-entrance');
+    const easingInput = document.getElementById('animation-easing');
+    const durationInput = document.getElementById('animation-duration');
+
+    // Single-select handlers
+    const setupSingleSelect = (options, input) => {
+        options.forEach(opt => {
+            opt.addEventListener('click', () => {
+                input.value = opt.dataset.value;
+                updateAnimationBuilderVisuals();
+            });
+        });
+    };
+
+    // Multi-select handlers (for card and button - can select multiple)
+    const setupMultiSelect = (options, input) => {
+        options.forEach(opt => {
+            opt.addEventListener('click', () => {
+                const val = opt.dataset.value;
+                let current = input.value ? input.value.split(',') : [];
+
+                if (current.includes(val)) {
+                    current = current.filter(f => f !== val);
+                } else {
+                    current.push(val);
+                }
+
+                input.value = current.join(',');
+                updateAnimationBuilderVisuals();
+            });
+        });
+    };
+
+    setupSingleSelect(intensityOptions, intensityInput);
+    setupMultiSelect(cardOptions, cardInput);
+    setupMultiSelect(buttonOptions, buttonInput);
+    setupSingleSelect(entranceOptions, entranceInput);
+    setupSingleSelect(easingOptions, easingInput);
+    setupSingleSelect(durationOptions, durationInput);
+
+    // Initial State Update
+    updateAnimationBuilderVisuals();
+}
+
+function updateAnimationBuilderVisuals() {
+    const intensityOptions = document.querySelectorAll('.animation-option[data-type="intensity"]');
+    const cardOptions = document.querySelectorAll('.animation-option[data-type="card"]');
+    const buttonOptions = document.querySelectorAll('.animation-option[data-type="button"]');
+    const entranceOptions = document.querySelectorAll('.animation-option[data-type="entrance"]');
+    const easingOptions = document.querySelectorAll('.animation-option[data-type="easing"]');
+    const durationOptions = document.querySelectorAll('.animation-option[data-type="duration"]');
+
+    const intensityVal = document.getElementById('animation-intensity')?.value || '';
+    const cardVal = document.getElementById('animation-card')?.value ? document.getElementById('animation-card').value.split(',') : [];
+    const buttonVal = document.getElementById('animation-button')?.value ? document.getElementById('animation-button').value.split(',') : [];
+    const entranceVal = document.getElementById('animation-entrance')?.value || '';
+    const easingVal = document.getElementById('animation-easing')?.value || '';
+    const durationVal = document.getElementById('animation-duration')?.value || '';
+
+    // Helper to update visual state
+    const update = (options, selectedValue, isMulti = false) => {
+        options.forEach(opt => {
+            const val = opt.dataset.value;
+            const isSelected = isMulti
+                ? (selectedValue.includes(val))
+                : (val === selectedValue);
+
+            const iconWrapper = opt.querySelector('.rounded-full');
+            const label = opt.querySelector('span');
+
+            if (isSelected) {
+                opt.classList.remove('border-gray-200', 'dark:border-gray-700', 'bg-white', 'dark:bg-gray-800', 'hover:border-pink-500/50');
+                opt.classList.add('border-pink-500', 'bg-pink-50', 'dark:bg-pink-900/20', 'shadow-sm');
+
+                if (iconWrapper) {
+                    iconWrapper.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+                    iconWrapper.classList.add('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
+                }
+                if (label) {
+                    label.classList.remove('text-gray-700', 'dark:text-gray-400');
+                    label.classList.add('text-pink-600', 'dark:text-pink-400');
+                }
+            } else {
+                opt.classList.remove('border-pink-500', 'bg-pink-50', 'dark:bg-pink-900/20', 'shadow-sm');
+                opt.classList.add('border-gray-200', 'dark:border-gray-700', 'bg-white', 'dark:bg-gray-800', 'hover:border-pink-500/50');
+
+                if (iconWrapper) {
+                    iconWrapper.classList.remove('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
+                    iconWrapper.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+                }
+                if (label) {
+                    label.classList.remove('text-pink-600', 'dark:text-pink-400');
+                    label.classList.add('text-gray-700', 'dark:text-gray-400');
+                }
+            }
+        });
+    };
+
+    update(intensityOptions, intensityVal);
+    update(cardOptions, cardVal, true);
+    update(buttonOptions, buttonVal, true);
+    update(entranceOptions, entranceVal);
+    update(easingOptions, easingVal);
+    update(durationOptions, durationVal);
+}
+
+function getAnimationPrompt() {
+    const intensity = document.getElementById('animation-intensity')?.value || 'subtle';
+    const cardAnimations = document.getElementById('animation-card')?.value ? document.getElementById('animation-card').value.split(',').filter(Boolean) : [];
+    const buttonAnimations = document.getElementById('animation-button')?.value ? document.getElementById('animation-button').value.split(',').filter(Boolean) : [];
+    const entrance = document.getElementById('animation-entrance')?.value || 'fade-up';
+    const easing = document.getElementById('animation-easing')?.value || 'ease-out';
+    const duration = document.getElementById('animation-duration')?.value || 'normal';
+
+    let prompt = `### Animation & Motion Design\n\n`;
+
+    // Intensity
+    if (animationBuilderOptions.intensity[intensity]) {
+        prompt += `**Overall Animation Style:**\n${animationBuilderOptions.intensity[intensity].prompt}\n\n`;
+    }
+
+    // Card Animations
+    if (cardAnimations.length > 0) {
+        prompt += `**Card Animations:**\n`;
+        cardAnimations.forEach(anim => {
+            if (animationBuilderOptions.cardAnimations[anim]) {
+                prompt += `- ${animationBuilderOptions.cardAnimations[anim].name}: ${animationBuilderOptions.cardAnimations[anim].prompt}\n`;
+            }
+        });
+        prompt += `\n`;
+    }
+
+    // Button Animations
+    if (buttonAnimations.length > 0) {
+        prompt += `**Button Animations:**\n`;
+        buttonAnimations.forEach(anim => {
+            if (animationBuilderOptions.buttonAnimations[anim]) {
+                prompt += `- ${animationBuilderOptions.buttonAnimations[anim].name}: ${animationBuilderOptions.buttonAnimations[anim].prompt}\n`;
+            }
+        });
+        prompt += `\n`;
+    }
+
+    // Entrance Animations
+    if (entrance !== 'none' && animationBuilderOptions.entranceAnimations[entrance]) {
+        prompt += `**Page Entrance Animation:**\n${animationBuilderOptions.entranceAnimations[entrance].prompt}\n\n`;
+    }
+
+    // Timing
+    prompt += `**Animation Timing:**\n`;
+    if (animationBuilderOptions.easing[easing]) {
+        prompt += `- Easing: ${animationBuilderOptions.easing[easing].prompt}\n`;
+    }
+    if (animationBuilderOptions.duration[duration]) {
+        prompt += `- Duration: ${animationBuilderOptions.duration[duration].prompt}\n`;
+    }
+
+    // Performance best practices
+    prompt += `\n**Performance Best Practices:**\n`;
+    prompt += `- Animate only \`transform\` and \`opacity\` whenever possible.\n`;
+    prompt += `- Avoid animating \`width\`, \`height\`, \`margin\`, or \`padding\` as they cause layout reflows.\n`;
+    prompt += `- Use \`will-change\` sparingly for complex animations.\n`;
+    prompt += `- Respect \`prefers-reduced-motion\` media query for accessibility.\n`;
+
+    return prompt.trim();
+}
+
 // Initialize Project Preset Picker
 function initPresetPicker() {
     const presetCards = document.querySelectorAll('.preset-card');
@@ -487,29 +863,58 @@ function initPresetPicker() {
 
                 // Update visual state for preset cards
                 presetCards.forEach(c => {
-                    c.classList.remove('border-pink-500', 'bg-pink-50', 'shadow-md', 'ring-2', 'ring-pink-500/30');
-                    c.classList.add('border-gray-200', 'bg-white', 'shadow-sm');
+                    // Reset to inactive state (Dark Mode Support)
+                    c.classList.remove('border-pink-500', 'bg-pink-50', 'dark:bg-pink-900/20', 'shadow-md', 'ring-2', 'ring-pink-500/30');
+                    c.classList.add('border-gray-200', 'dark:border-gray-700', 'bg-white', 'dark:bg-gray-800', 'shadow-sm');
+
                     const nameEl = c.querySelector('.preset-name');
                     const tagEl = c.querySelector('.preset-tag');
                     const descEl = c.querySelector('.preset-desc');
-                    if (nameEl) nameEl.classList.replace('text-pink-600', 'text-gray-900');
-                    if (tagEl) { tagEl.classList.replace('bg-pink-100', 'bg-gray-100'); tagEl.classList.replace('text-pink-600', 'text-gray-500'); }
-                    if (descEl) descEl.classList.replace('text-pink-500', 'text-gray-500');
                     const icon = c.querySelector('.preset-icon');
-                    if (icon) { icon.classList.replace('bg-pink-100', 'bg-gray-100'); icon.classList.replace('text-pink-600', 'text-gray-600'); }
+
+                    if (nameEl) {
+                        nameEl.classList.remove('text-pink-600', 'dark:text-pink-400');
+                        nameEl.classList.add('text-gray-900', 'dark:text-gray-200');
+                    }
+                    if (tagEl) {
+                        tagEl.classList.remove('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
+                        tagEl.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+                    }
+                    if (descEl) {
+                        descEl.classList.remove('text-pink-500', 'dark:text-pink-400');
+                        descEl.classList.add('text-gray-500', 'dark:text-gray-400');
+                    }
+                    if (icon) {
+                        icon.classList.remove('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
+                        icon.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-400');
+                    }
                 });
 
-                // Set active state
-                card.classList.remove('border-gray-200', 'bg-white', 'shadow-sm');
-                card.classList.add('border-pink-500', 'bg-pink-50', 'shadow-md', 'ring-2', 'ring-pink-500/30');
+                // Set active state (Dark Mode Support)
+                card.classList.remove('border-gray-200', 'dark:border-gray-700', 'bg-white', 'dark:bg-gray-800', 'shadow-sm');
+                card.classList.add('border-pink-500', 'bg-pink-50', 'dark:bg-pink-900/20', 'shadow-md', 'ring-2', 'ring-pink-500/30');
+
                 const nameEl = card.querySelector('.preset-name');
                 const tagEl = card.querySelector('.preset-tag');
                 const descEl = card.querySelector('.preset-desc');
-                if (nameEl) nameEl.classList.replace('text-gray-900', 'text-pink-600');
-                if (tagEl) { tagEl.classList.replace('bg-gray-100', 'bg-pink-100'); tagEl.classList.replace('text-gray-500', 'text-pink-600'); }
-                if (descEl) descEl.classList.replace('text-gray-500', 'text-pink-500');
                 const icon = card.querySelector('.preset-icon');
-                if (icon) { icon.classList.replace('bg-gray-100', 'bg-pink-100'); icon.classList.replace('text-gray-600', 'text-pink-600'); }
+
+                if (nameEl) {
+                    nameEl.classList.remove('text-gray-900', 'dark:text-gray-200');
+                    nameEl.classList.add('text-pink-600', 'dark:text-pink-400');
+                }
+                if (tagEl) {
+                    tagEl.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+                    tagEl.classList.add('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
+                }
+                if (descEl) {
+                    descEl.classList.remove('text-gray-500', 'dark:text-gray-400');
+                    descEl.classList.add('text-pink-500', 'dark:text-pink-400');
+                }
+                if (icon) {
+                    icon.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-400');
+                    icon.classList.add('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
+                }
             }
         });
     });
@@ -604,6 +1009,25 @@ function applyPreset(presetKey) {
         customReqs.value = preset.specificRequirements;
     }
 
+    // Apply Animation Builder Settings
+    if (preset.animation) {
+        const intensityInput = document.getElementById('animation-intensity');
+        const cardInput = document.getElementById('animation-card');
+        const buttonInput = document.getElementById('animation-button');
+        const entranceInput = document.getElementById('animation-entrance');
+        const easingInput = document.getElementById('animation-easing');
+        const durationInput = document.getElementById('animation-duration');
+
+        if (intensityInput) intensityInput.value = preset.animation.intensity;
+        if (cardInput) cardInput.value = preset.animation.card;
+        if (buttonInput) buttonInput.value = preset.animation.button;
+        if (entranceInput) entranceInput.value = preset.animation.entrance;
+        if (easingInput) easingInput.value = preset.animation.easing;
+        if (durationInput) durationInput.value = preset.animation.duration;
+
+        updateAnimationBuilderVisuals();
+    }
+
     // Update preview
     updatePreview();
 }
@@ -636,54 +1060,56 @@ function initCustomSelectors() {
                 updatePreview();
             }
 
-            // Update Visuals (Simple toggling for now, assuming HTML sets initial state correctly)
+            // Update Visuals
             const siblings = container.querySelectorAll('.option-card');
             siblings.forEach(sib => {
                 // Reset standard borders/bg
-                sib.classList.remove('border-pink-500', 'bg-pink-50', 'shadow-md');
-                sib.classList.add('border-gray-200', 'hover:border-pink-500/50', 'bg-white', 'shadow-sm');
+                sib.classList.remove('border-pink-500', 'bg-pink-50', 'dark:bg-pink-900/20', 'shadow-md');
+                sib.classList.add('border-gray-200', 'dark:border-gray-700', 'hover:border-pink-500/50', 'bg-white', 'dark:bg-gray-800', 'shadow-sm');
                 sib.classList.remove('bg-pink-500/10'); // Cleanup just in case
 
                 // Reset standard text colors
                 const texts = sib.querySelectorAll('span');
-                texts.forEach(t => t.classList.remove('text-pink-600', 'font-semibold'));
-                texts.forEach(t => t.classList.add('text-gray-600', 'group-hover:text-gray-900'));
+                texts.forEach(t => {
+                    t.classList.remove('text-pink-600', 'dark:text-pink-400', 'font-semibold');
+                    t.classList.add('text-gray-600', 'dark:text-gray-400', 'group-hover:text-gray-900', 'dark:group-hover:text-gray-200');
+                });
 
                 // Reset icon colors
                 const icon = sib.querySelector('.rounded-full');
                 if (icon) {
-                    icon.classList.remove('bg-pink-100', 'text-pink-600');
-                    icon.classList.add('bg-gray-100', 'text-gray-600', 'group-hover:text-gray-900');
+                    icon.classList.remove('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
+                    icon.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-400', 'group-hover:text-gray-900', 'dark:group-hover:text-gray-200');
                 }
 
                 // Handle big letter weights (special case)
                 const bigLetter = sib.querySelector('.text-lg');
                 if (bigLetter) {
-                    bigLetter.classList.remove('text-pink-600');
-                    bigLetter.classList.add('text-gray-400');
+                    bigLetter.classList.remove('text-pink-600', 'dark:text-pink-400');
+                    bigLetter.classList.add('text-gray-600', 'dark:text-gray-400');
                 }
             });
 
             // Set Active State
-            card.classList.remove('border-gray-200', 'hover:border-pink-500/50', 'bg-white', 'shadow-sm');
-            card.classList.add('border-pink-500', 'bg-pink-50', 'shadow-md');
+            card.classList.remove('border-gray-200', 'dark:border-gray-700', 'hover:border-pink-500/50', 'bg-white', 'dark:bg-gray-800', 'shadow-sm');
+            card.classList.add('border-pink-500', 'bg-pink-50', 'dark:bg-pink-900/20', 'shadow-md');
 
             const texts = card.querySelectorAll('span');
             texts.forEach(t => {
-                t.classList.remove('text-gray-600', 'group-hover:text-gray-900');
-                t.classList.add('text-pink-600', 'font-semibold');
+                t.classList.remove('text-gray-600', 'dark:text-gray-400', 'group-hover:text-gray-900', 'dark:group-hover:text-gray-200');
+                t.classList.add('text-pink-600', 'dark:text-pink-400', 'font-semibold');
             });
 
             const icon = card.querySelector('.rounded-full');
             if (icon) {
-                icon.classList.remove('bg-gray-100', 'text-gray-600', 'group-hover:text-gray-900');
-                icon.classList.add('bg-pink-100', 'text-pink-600');
+                icon.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-400', 'group-hover:text-gray-900', 'dark:group-hover:text-gray-200');
+                icon.classList.add('bg-pink-100', 'dark:bg-pink-900/40', 'text-pink-600', 'dark:text-pink-400');
             }
 
             const bigLetter = card.querySelector('.text-lg');
             if (bigLetter) {
-                bigLetter.classList.remove('text-gray-400');
-                bigLetter.classList.add('text-pink-600');
+                bigLetter.classList.remove('text-gray-600', 'dark:text-gray-400');
+                bigLetter.classList.add('text-pink-600', 'dark:text-pink-400');
             }
         });
     });
@@ -714,10 +1140,14 @@ function initColorPicker() {
 }
 
 function initAnimations() {
-    const groups = document.querySelectorAll('[data-group]');
+    // Standard option groups + layout/animation builder groups
+    const groups = document.querySelectorAll('[data-group], [id$="-options"]');
     groups.forEach(group => {
-        const cards = group.querySelectorAll('.option-card');
+        const cards = group.querySelectorAll('.option-card, .animation-option, .layout-option, .preset-card');
         cards.forEach((card, index) => {
+            // Reset state if needed
+            card.classList.remove('opacity-0', 'animate-fade-in');
+
             // Staggered Fade In
             card.classList.add('opacity-0', 'animate-fade-in');
 
@@ -767,7 +1197,16 @@ function updatePreview() {
     const tag = document.getElementById('preview-tag');
 
     // Apply Typography
-    const fontStack = cssMapping.fonts[familyKey];
+    // Map family key to a real preview font if it's one of the categorized strings
+    let fontStack = cssMapping.fonts[familyKey];
+    if (!fontStack) {
+        // Fallback or specific preview mapping for categories
+        if (familyKey === 'sans') fontStack = "'Inter', sans-serif";
+        else if (familyKey === 'serif') fontStack = "'Merriweather', serif";
+        else if (familyKey === 'mono') fontStack = "'JetBrains Mono', monospace";
+        else fontStack = "sans-serif";
+    }
+
     container.style.fontFamily = fontStack;
 
     if (tag) {
@@ -848,8 +1287,20 @@ function generatePrompt() {
 
     // Styling Builder Settings
     const shadow = document.getElementById('shadow-depth')?.value || 'none';
+    const paletteKey = document.getElementById('color-palette')?.value || 'modern';
     const device = document.getElementById('device-opt')?.value || 'desktop';
-    const palette = document.getElementById('color-palette')?.value || 'modern';
+
+    // Resolve Palette Details
+    const paletteData = palettes[paletteKey];
+    let paletteDesc = paletteKey;
+
+    if (paletteData) {
+        if (paletteData.prompt) {
+            paletteDesc = paletteData.prompt;
+        } else {
+            paletteDesc = `${paletteData.name} (${paletteData.desc}) - Colors: [${paletteData.colors.join(', ')}]`;
+        }
+    }
 
     const fontFamily = typographyConfig.families[familyKey];
     const sizeHeading = typographyConfig.sizes.heading[sizeHeadingKey];
@@ -866,10 +1317,7 @@ function generatePrompt() {
         layoutDesc = `\n**Layout & Structure**\n${layoutPrompt}\n`;
     }
 
-    // Construct Typography Section
-    // Construct Typography Section
     let typeDesc = "";
-
     const pairingKey = document.getElementById('font-pairing').value;
     if (pairingKey && fontPairings[pairingKey] && pairingKey !== 'none') {
         typeDesc += `${fontPairings[pairingKey].prompt}\n\n### Additional Typography Details\n`;
@@ -882,6 +1330,9 @@ function generatePrompt() {
 • **Buttons & Labels (Caps)**: letter-spacing: ${spcCaps}
 • Ensure proper contrast and hierarchy between text elements.`;
 
+    // Animation Section (From Builder)
+    const animationPrompt = getAnimationPrompt();
+
     const prompt = `
 > Create a modern and professional user interface design.
 
@@ -889,7 +1340,7 @@ function generatePrompt() {
 ${styleDesc}
 ${themeDesc}
 Primary Accent Color: ${colorName} (${colorHex}).
-Color Palette Style: ${palette}.
+Color Palette: ${paletteDesc}
 Shadow Depth: ${shadow}.
 Target Device: ${device}.
 
@@ -897,11 +1348,12 @@ Target Device: ${device}.
 ${typeDesc}
 ${layoutDesc}${layoutGuide}
 
-**Animation & Interaction**
-${animationGuide}
+${animationPrompt}
 
 **Specific Requirements**
-${customReqs ? customReqs : "ensure the design is polished, accessible (WCAG AA), and follows modern UI/UX best practices."}
+${customReqs ? customReqs : "Ensure the design is polished, accessible (WCAG AA), and follows modern UI/UX best practices."}
+
+${professionalRules}
 `;
 
     const output = document.getElementById('prompt-output');
@@ -965,5 +1417,33 @@ function initCollapsibles() {
     setupToggle('toggle-layout-builder', 'content-layout-builder', 'icon-layout-builder');
     setupToggle('toggle-styling', 'content-styling', 'icon-styling');
     setupToggle('toggle-typography', 'content-typography', 'icon-typography');
+    setupToggle('toggle-animation', 'content-animation', 'icon-animation');
     setupToggle('toggle-preview', 'content-preview', 'icon-preview');
+}
+
+function initAppTheme() {
+    const toggleBtn = document.getElementById('app-theme-toggle');
+    const html = document.documentElement;
+
+    // Check local storage or system preference
+    const savedTheme = localStorage.getItem('serum-theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+        html.classList.add('dark');
+    } else {
+        html.classList.remove('dark');
+    }
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('serum-theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('serum-theme', 'dark');
+            }
+        });
+    }
 }
