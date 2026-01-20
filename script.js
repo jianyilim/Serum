@@ -94,7 +94,9 @@ const projectPresets = {
         color: "#3B82F6",
         palette: "modern",
         shadow: "large",
+        shadow: "large",
         device: "desktop",
+        layout: { type: 'responsive', purpose: 'website', features: ['navigation', 'hero', 'footer'] },
         // Typography Settings
         fontPairing: "none",
         typeFamily: "sans",
@@ -123,7 +125,10 @@ const projectPresets = {
         color: "#6B7280",
         palette: "monochrome",
         shadow: "small",
+        shadow: "small",
         device: "desktop",
+        shadow: "small",
+        layout: { type: 'list', purpose: 'article', features: ['navigation', 'sidebar', 'footer'] },
         // Typography Settings
         fontPairing: "classic",
         typeFamily: "serif",
@@ -152,7 +157,11 @@ const projectPresets = {
         color: "#3B82F6",
         palette: "modern",
         shadow: "large",
+        shadow: "large",
         device: "desktop",
+        shadow: "large",
+        device: "desktop",
+        layout: { type: 'dashboard', purpose: 'dashboard', features: ['sidebar', 'navigation', 'cards'] },
         // Typography Settings
         fontPairing: "modern",
         typeFamily: "grotesque",
@@ -166,7 +175,7 @@ const projectPresets = {
         spacingBody: "0em",
         spacingCaps: "0.02em",
         // Specific Requirements
-        specificRequirements: "Create a modern SaaS dashboard with glassmorphism design using an adaptive theme that responds to system preferences. Ensure the design is professional, accessible with WCAG AA compliance, and follows current UI/UX best practices with proper contrast ratios and responsive behavior. Include subtle micro-interactions and smooth transitions between states. Use vibrant blue (#3B82F6) for interactive elements."
+        specificRequirements: "Create a modern SaaS application with glassmorphism design using an adaptive theme that responds to system preferences. Ensure the design is professional, accessible with WCAG AA compliance, and follows current UI/UX best practices with proper contrast ratios and responsive behavior. Include subtle micro-interactions and smooth transitions between states. Use vibrant blue (#3B82F6) for interactive elements."
     },
     ecommerce: {
         name: "E-commerce Store",
@@ -181,7 +190,11 @@ const projectPresets = {
         color: "#10B981",
         palette: "earth",
         shadow: "medium",
+        shadow: "medium",
         device: "mobile",
+        shadow: "medium",
+        device: "mobile",
+        layout: { type: 'grid', purpose: 'product', features: ['navigation', 'gallery', 'tabs', 'cards'] },
         // Typography Settings
         fontPairing: "none",
         typeFamily: "sans",
@@ -195,7 +208,7 @@ const projectPresets = {
         spacingBody: "0em",
         spacingCaps: "0.02em",
         // Specific Requirements
-        specificRequirements: "Design a mobile-first e-commerce app interface with iOS-style design using rounded corners. Ensure the design feels native with proper spacing, readable typography, and accessible color contrast ratios above 4.5:1. Include loading states, error handling, and success feedback with appropriate semantic colors. Use large touch targets (44px minimum) and thumb-friendly navigation."
+        specificRequirements: "Design a mobile-first app interface with iOS-style design using rounded corners. Ensure the design feels native with proper spacing, readable typography, and accessible color contrast ratios above 4.5:1. Include loading states, error handling, and success feedback with appropriate semantic colors. Use large touch targets (44px minimum) and thumb-friendly navigation."
     },
     portfolio: {
         name: "Creative Portfolio",
@@ -210,7 +223,11 @@ const projectPresets = {
         color: "#8B5CF6",
         palette: "vibrant",
         shadow: "2xl",
+        shadow: "2xl",
         device: "desktop",
+        shadow: "2xl",
+        device: "desktop",
+        layout: { type: 'bento', purpose: 'portfolio', features: ['gallery', 'animations'] },
         // Typography Settings
         fontPairing: "none",
         typeFamily: "display",
@@ -239,7 +256,9 @@ const projectPresets = {
         color: "#F97316",
         palette: "vibrant",
         shadow: "small",
+        shadow: "small",
         device: "desktop",
+        layout: { type: 'custom', purpose: 'website', features: ['animations', 'hero'] },
         // Typography Settings
         fontPairing: "none",
         typeFamily: "display",
@@ -253,13 +272,43 @@ const projectPresets = {
         spacingBody: "0em",
         spacingCaps: "0.05em",
         // Specific Requirements
-        specificRequirements: "Design a gaming community platform with neumorphic design using soft, extruded plastic-like appearance for a tactile, engaging feel. Ensure the design appeals to gaming audiences with high contrast for visibility, customizable themes, and engaging visual feedback. Include animated elements, achievement displays, and community features that enhance the gaming experience."
+        specificRequirements: "Design a platform with neumorphic design using soft, extruded plastic-like appearance for a tactile, engaging feel. Ensure the design appeals to audiences with high contrast for visibility, customizable themes, and engaging visual feedback. Include animated elements, achievement displays, and community features that enhance the experience."
     }
 };
 
 // Layout & Animation (General Best Practices to append)
 const layoutGuide = "Layout: Adopt a mobile-first approach. Start with single-column layouts for mobile (<640px) and expand to multi-column grids for tablet (768px) and desktop (1024px+). Use consistent spacing (multiples of 4px) and ensure touch targets are at least 44px.";
 const animationGuide = "Animation: Implement subtle micro-interactions. Use 'transform' and 'opacity' for distinct hover states (e.g., scale 1.05x). Add staggered entrance animations for lists and cards using ease-out timing.";
+
+// Layout Builder Options
+const layoutBuilderOptions = {
+    types: {
+        responsive: "Create a fully responsive layout that adapts fluidly to all screen sizes. Use a mobile-first approach, starting with a single-column layout for small screens (<640px) and expanding to complex multi-column grids for tablets (768px+) and desktops (1024px+).",
+        list: "Design a clean list-based layout focused on vertical scanning. Present content in consistent rows or cards, optimized for readability and quick comparisons. Ensure clear separation between items using borders or whitespace.",
+        grid: "Implement a structured grid layout. Content should be organized in a modular grid system (e.g., 12-column) allowing for flexible arrangement of cards or media elements. Maintain consistent gutters and alignment.",
+        bento: "Create a 'Bento Box' style layout. Use a grid of modular, varying-sized container boxes (rectangular and square) to present different types of content in a unified, visually interesting way. Use rounded corners and consistent gaps.",
+        custom: "Design a unique, custom layout structure that breaks away from standard patterns. Focus on creative placement of elements, asymmetry, or overlapping layers to create a distinct visual identity."
+    },
+    purposes: {
+        website: "Structure the design as a complete website page. Include a header, navigation, main hero section, content features, and a footer.",
+        product: "Focus the layout on showcasing a product. Highlight product imagery (gallery), key features, pricing, and a prominent call-to-action.",
+        dashboard: "Organize the layout as a functional dashboard. distinct areas for navigation (sidebar/topbar), data visualization (charts/stats), and activity feeds.",
+        article: "Optimize the layout for long-form reading. Prioritize typography, line length (60-75 chars), and comfortable whitespace. Minimize distractions.",
+        portfolio: "Showcase creative work visually. Prioritize large media/project thumbnails and minimal text. Allow the work to stand out.",
+        mobile: "Design specifically for a mobile app screen context. layout logic should fit within a compact vertical viewport, utilizing standard mobile navigation patterns (tab bar, bottom sheet)."
+    },
+    features: {
+        navigation: "Include a clear, responsive navigation menu (hamburger on mobile).",
+        hero: "Add a prominent Hero section at the top with headline, subheadline, and primary visual.",
+        cards: "Use card-based components to group related content chunks.",
+        footer: "Include a comprehensive footer area with links, copyright, and social icons.",
+        sidebar: "Implement a sidebar element (collapsible on mobile) for navigation or filters.",
+        tabs: "Use tabbed interfaces to organize content without leaving the context.",
+        gallery: "Integrate an image gallery or carousel component.",
+        forms: "Include input forms (e.g., newsletter, contact, search) with proper validation states.",
+        animations: "Integrate subtle micro-interactions and entrance animations for a dynamic feel."
+    }
+};
 
 // Map config keys to actual CSS values
 const cssMapping = {
@@ -280,6 +329,7 @@ const cssMapping = {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initPresetPicker(); // Initialize project type presets
+    initLayoutBuilder(); // Initialize new layout prompt builder
     initColorPicker();
     initCustomSelectors(); // Initialize custom card selectors
     initCollapsibles(); // Initialize collapsible sections
@@ -297,6 +347,134 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial Trigger
     updatePreview();
 });
+
+// Initialize Layout Prompt Builder (New)
+// Initialize Layout Prompt Builder (New)
+function initLayoutBuilder() {
+    const typeOptions = document.querySelectorAll('.layout-option[data-type="type"]');
+    const purposeOptions = document.querySelectorAll('.layout-option[data-type="purpose"]');
+    const featureOptions = document.querySelectorAll('.layout-option[data-type="feature"]');
+
+    const typeInput = document.getElementById('layout-type');
+    const purposeInput = document.getElementById('layout-purpose');
+    const featuresInput = document.getElementById('layout-features');
+
+    // Type Selection
+    typeOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+            typeInput.value = opt.dataset.value;
+            updateLayoutBuilderVisuals();
+        });
+    });
+
+    // Purpose Selection
+    purposeOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+            purposeInput.value = opt.dataset.value;
+            updateLayoutBuilderVisuals();
+        });
+    });
+
+    // Features Selection (Multi)
+    featureOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+            const val = opt.dataset.value;
+            let current = featuresInput.value ? featuresInput.value.split(',') : [];
+
+            if (current.includes(val)) {
+                current = current.filter(f => f !== val);
+            } else {
+                current.push(val);
+            }
+
+            featuresInput.value = current.join(',');
+            updateLayoutBuilderVisuals();
+        });
+    });
+
+    // Initial State Update
+    updateLayoutBuilderVisuals();
+}
+
+function updateLayoutBuilderVisuals() {
+    const typeOptions = document.querySelectorAll('.layout-option[data-type="type"]');
+    const purposeOptions = document.querySelectorAll('.layout-option[data-type="purpose"]');
+    const featureOptions = document.querySelectorAll('.layout-option[data-type="feature"]');
+
+    const typeVal = document.getElementById('layout-type').value;
+    const purposeVal = document.getElementById('layout-purpose').value;
+    const featuresVal = document.getElementById('layout-features').value ? document.getElementById('layout-features').value.split(',') : [];
+
+    // Helper to update visual state
+    const update = (options, selectedValue, isMulti = false) => {
+        options.forEach(opt => {
+            const val = opt.dataset.value;
+            const isSelected = isMulti
+                ? (selectedValue.includes(val))
+                : (val === selectedValue);
+
+            const iconWrapper = opt.querySelector('.rounded-full');
+            const label = opt.querySelector('span');
+
+            if (isSelected) {
+                opt.classList.remove('border-gray-200', 'bg-white', 'hover:border-pink-500/50');
+                opt.classList.add('border-pink-500', 'bg-pink-50', 'shadow-sm');
+
+                if (iconWrapper) {
+                    iconWrapper.classList.remove('bg-gray-100', 'text-gray-500');
+                    iconWrapper.classList.add('bg-pink-100', 'text-pink-600');
+                }
+                if (label) {
+                    label.classList.remove('text-gray-700');
+                    label.classList.add('text-pink-600');
+                }
+            } else {
+                opt.classList.remove('border-pink-500', 'bg-pink-50', 'shadow-sm');
+                opt.classList.add('border-gray-200', 'bg-white', 'hover:border-pink-500/50');
+
+                if (iconWrapper) {
+                    iconWrapper.classList.remove('bg-pink-100', 'text-pink-600');
+                    iconWrapper.classList.add('bg-gray-100', 'text-gray-500');
+                }
+                if (label) {
+                    label.classList.remove('text-pink-600');
+                    label.classList.add('text-gray-700');
+                }
+            }
+        });
+    };
+
+    update(typeOptions, typeVal);
+    update(purposeOptions, purposeVal);
+    update(featureOptions, featuresVal, true);
+}
+
+function getLayoutPrompt() {
+    const type = document.getElementById('layout-type').value;
+    const purpose = document.getElementById('layout-purpose').value;
+    const features = document.getElementById('layout-features').value ? document.getElementById('layout-features').value.split(',') : [];
+
+    let prompt = `Layout Strategy:\n`;
+
+    if (layoutBuilderOptions.types[type]) {
+        prompt += `${layoutBuilderOptions.types[type]}\n`;
+    }
+
+    if (layoutBuilderOptions.purposes[purpose]) {
+        prompt += `\nContent Purpose:\n${layoutBuilderOptions.purposes[purpose]}\n`;
+    }
+
+    if (features.length > 0) {
+        prompt += `\nKey Features to Implement:\n`;
+        features.forEach(f => {
+            if (layoutBuilderOptions.features[f]) {
+                prompt += `- ${layoutBuilderOptions.features[f]}\n`;
+            }
+        });
+    }
+
+    return prompt.trim();
+}
 
 // Initialize Project Preset Picker
 function initPresetPicker() {
@@ -390,6 +568,22 @@ function applyPreset(presetKey) {
     updateField('color-palette', preset.palette);
     updateField('shadow-depth', preset.shadow);
     updateField('device-opt', preset.device);
+    // updateField('selected-layout', preset.layout); <-- No longer simple field
+
+    // Apply Layout Builder Settings
+    if (preset.layout) {
+        const typeInput = document.getElementById('layout-type');
+        const purposeInput = document.getElementById('layout-purpose');
+        const featuresInput = document.getElementById('layout-features');
+
+        if (typeInput && preset.layout.type) typeInput.value = preset.layout.type;
+        if (purposeInput && preset.layout.purpose) purposeInput.value = preset.layout.purpose;
+        if (featuresInput && preset.layout.features) featuresInput.value = preset.layout.features.join(',');
+
+        // Retrigger visuals
+        // Retrigger visuals
+        updateLayoutBuilderVisuals();
+    }
 
     // Apply Typography Settings
     updateField('font-pairing', preset.fontPairing);
@@ -665,6 +859,13 @@ function generatePrompt() {
     const styleDesc = visualStyles[style] || style;
     const themeDesc = themes[theme] || theme;
 
+    // Layout Section (From Builder)
+    const layoutPrompt = getLayoutPrompt();
+    let layoutDesc = "";
+    if (layoutPrompt) {
+        layoutDesc = `\n**Layout & Structure**\n${layoutPrompt}\n`;
+    }
+
     // Construct Typography Section
     // Construct Typography Section
     let typeDesc = "";
@@ -694,7 +895,7 @@ Target Device: ${device}.
 
 **Typography & Layout**
 ${typeDesc}
-${layoutGuide}
+${layoutDesc}${layoutGuide}
 
 **Animation & Interaction**
 ${animationGuide}
@@ -761,6 +962,7 @@ function initCollapsibles() {
     };
 
     setupToggle('toggle-presets', 'content-presets', 'icon-presets');
+    setupToggle('toggle-layout-builder', 'content-layout-builder', 'icon-layout-builder');
     setupToggle('toggle-styling', 'content-styling', 'icon-styling');
     setupToggle('toggle-typography', 'content-typography', 'icon-typography');
     setupToggle('toggle-preview', 'content-preview', 'icon-preview');

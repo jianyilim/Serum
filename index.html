@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serum | AI UI Prompt Generator</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="output.css?v=1.0">
+    <link rel="stylesheet" href="output.css?v=1.1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -43,7 +43,7 @@
             class="w-full md:w-[400px] flex-none border-b md:border-b-0 md:border-r border-gray-200 md:overflow-y-auto bg-white custom-scrollbar">
             <div class="p-6 space-y-8">
                 <div>
-                    <h1 class="text-2xl font-bold font-display text-gray-900 mb-2">Configuration</h1>
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">Configuration</h1>
                     <p class="text-gray-500 text-sm leading-relaxed">
                         Customize your design system preferences below.
                     </p>
@@ -1003,13 +1003,243 @@
                         </div>
                     </div>
 
-                    <!-- Specifics -->
+                    <!-- Layout Patterns (New Builder) -->
+                    <div id="layout-prompt-builder" class="space-y-6 pt-4 border-t border-gray-200">
+                        <div class="flex items-center justify-between group cursor-pointer" id="toggle-layout-builder">
+                            <label
+                                class="text-xs uppercase tracking-wider font-semibold text-gray-400 cursor-pointer pointer-events-none group-hover:text-gray-600 transition-colors">Layout
+                                Prompt Builder</label>
+                            <i data-lucide="chevron-down"
+                                class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-transform duration-200"
+                                id="icon-layout-builder"></i>
+                        </div>
+
+                        <div id="content-layout-builder" class="transition-all duration-300 origin-top hidden">
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
+                                <p class="text-xs text-gray-500 mb-6">Build custom layout prompts for your designs
+                                    options
+                                    below.</p>
+
+                                <div class="grid grid-cols-1 gap-8 mb-8">
+                                    <div class="space-y-8">
+                                        <!-- Layout Type -->
+                                        <div class="space-y-4">
+                                            <h3 class="text-sm font-medium text-gray-900">Layout Type</h3>
+                                            <input type="hidden" id="layout-type" value="responsive">
+                                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="layout-type-options">
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-pink-500 bg-pink-50 shadow-sm"
+                                                    data-type="type" data-value="responsive">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-pink-100 text-pink-600"><i
+                                                                data-lucide="layers" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-pink-600">Responsive</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="type" data-value="list">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="list" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">List</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="type" data-value="grid">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="layout-grid" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Grid</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="type" data-value="bento">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="layout-template" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Bento</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="type" data-value="custom">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="code" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Custom</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Content Purpose -->
+                                        <div class="space-y-4">
+                                            <h3 class="text-sm font-medium text-gray-900">Content Purpose</h3>
+                                            <input type="hidden" id="layout-purpose" value="website">
+                                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3"
+                                                id="layout-purpose-options">
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-pink-500 bg-pink-50 shadow-sm"
+                                                    data-type="purpose" data-value="website">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-pink-100 text-pink-600"><i
+                                                                data-lucide="layout" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-pink-600">Website</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="purpose" data-value="product">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="shopping-bag" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Product</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="purpose" data-value="dashboard">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="layout-dashboard" class="h-4 w-4"></i>
+                                                        </div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Dashboard</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="purpose" data-value="article">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="file-text" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Article</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="purpose" data-value="portfolio">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="briefcase" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Portfolio</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="purpose" data-value="mobile">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="smartphone" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Mobile</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Additional Features -->
+                                        <div class="space-y-4">
+                                            <h3 class="text-sm font-medium text-gray-900">Additional Features</h3>
+                                            <input type="hidden" id="layout-features" value=""> <!-- Comma separated -->
+                                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3"
+                                                id="layout-feature-options">
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="navigation">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="menu" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Navigation</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="hero">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="image" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Hero</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="cards">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="credit-card" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Cards</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="footer">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="footprints" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Footer</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="sidebar">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="panel-left" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Sidebar</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="tabs">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="trello" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Tabs</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="gallery">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="images" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Gallery</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="forms">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="clipboard-list" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Forms</span>
+                                                    </div>
+                                                </div>
+                                                <div class="layout-option p-3 rounded-lg border cursor-pointer transition-all border-gray-200 hover:border-pink-500/50 bg-white shadow-sm"
+                                                    data-type="feature" data-value="animations">
+                                                    <div class="flex flex-col items-center space-y-2">
+                                                        <div class="p-2 rounded-full bg-gray-100 text-gray-500"><i
+                                                                data-lucide="zap" class="h-4 w-4"></i></div>
+                                                        <span
+                                                            class="text-[10px] uppercase font-medium text-gray-700">Animations</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div> <!-- Specifics -->
                     <div class="space-y-2 pt-4 border-t border-gray-200">
                         <label class="text-xs uppercase tracking-wider font-semibold text-gray-400">Specific
                             Requirements</label>
                         <textarea id="custom-reqs" rows="3" placeholder="Additional details..."
                             class="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 transition-all resize-none text-gray-900"></textarea>
-                    </div>
                 </form>
             </div>
         </aside>
@@ -1126,7 +1356,7 @@
         </div>
     </main>
 
-    <script src="script.js?v=1.0"></script>
+    <script src="script.js?v=1.1"></script>
     <script>
         lucide.createIcons();
     </script>
