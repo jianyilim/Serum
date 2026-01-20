@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serum | AI UI Prompt Generator</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="output.css?v=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Serif:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Merriweather:wght@300;400;700;900&family=Oswald:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body
+    class="bg-[#F9FAFB] text-gray-900 font-sans antialiased min-h-screen md:h-screen flex flex-col selection:bg-pink-500/30 md:overflow-hidden">
+
+    <!-- Background Effects: Clean -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#F9FAFB]"></div>
+
+    <!-- Header -->
+    <header class="w-full border-b border-gray-200 bg-white/80 backdrop-blur-md z-50 flex-none">
+        <div class="w-full px-6 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="flask-conical" class="text-pink-600 w-5 h-5"></i>
+                <span class="text-lg font-bold font-display tracking-tight text-gray-900">Serum</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-medium text-gray-500">AI Prompt Generator</span>
+                <a href="#" class="text-xs font-medium text-gray-400 hover:text-gray-900 transition-colors">v1.2</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Layout -->
+    <main class="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
+
+        <!-- LEFT PANEL: Controls (Inspector) -->
+        <aside
+            class="w-full md:w-[400px] flex-none border-b md:border-b-0 md:border-r border-gray-200 md:overflow-y-auto bg-white custom-scrollbar">
+            <div class="p-6 space-y-8">
+                <div>
+                    <h1 class="text-2xl font-bold font-display text-gray-900 mb-2">Configuration</h1>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Customize your design system preferences below.
+                    </p>
+                </div>
+
+                <form id="serum-form" class="space-y-8">
+                    <!-- Project Type Presets (Quick Start) -->
+                    <div class="space-y-6 pt-4 border-t border-gray-200" id="project-presets">
+                        <button type="button"
+                            class="w-full flex items-center justify-between group focus:outline-none cursor-pointer"
+                            id="toggle-presets">
+                            <div class="flex items-center gap-2">
+                                <label
+                                    class="text-xs uppercase tracking-wider font-semibold text-gray-400 cursor-pointer group-hover:text-gray-600 transition-colors pointer-events-none">Quick
+                                    Start</label>
+                                <span
+                                    class="px-2 py-0.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-[9px] font-bold text-white uppercase tracking-wide">Presets</span>
+                            </div>
+                            <i data-lucide="chevron-down"
+                                class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-transform duration-200"
+                                id="icon-presets"></i>
+                        </button>
+
+                        <div id="content-presets" class="space-y-3 transition-all duration-300 origin-top">
+                            <p class="text-xs text-gray-500 leading-relaxed">Select a project type to auto-configure
+                                typography and styling preferences.</p>
+
+                            <div class="grid grid-cols-1 gap-3">
+                                <!-- Modern Business Website -->
+                                <button type="button"
+                                    class="preset-card cursor-pointer p-4 rounded-xl border border-gray-200 bg-white hover:border-pink-500/50 text-left flex items-start gap-4 shadow-sm transition-all duration-200 group"
+                                    data-preset="business">
+                                    <div
+                                        class="preset-icon flex-none w-10 h-10 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center">
+                                        <i data-lucide="briefcase" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="preset-name font-semibold text-gray-900 text-sm">Modern
+                                                Business</span>
+                                            <span
+                                                class="preset-tag px-2 py-0.5 rounded bg-gray-100 text-[9px] font-bold text-gray-500 uppercase tracking-wide">Professional</span>
+                                        </div>
+                                        <p class="preset-desc text-xs text-gray-500 leading-relaxed">Inter-based
+                                            typography with clean modern feel. Blue accent.</p>
+                                        <div class="flex items-center gap-3 mt-2">
+                                            <span class="text-[10px] text-gray-400 font-mono">48px • 24px • 16px</span>
+                                            <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <!-- Editorial Blog -->
+                                <button type="button"
+                                    class="preset-card cursor-pointer p-4 rounded-xl border border-gray-200 bg-white hover:border-pink-500/50 text-left flex items-start gap-4 shadow-sm transition-all duration-200 group"
+                                    data-preset="editorial">
+                                    <div
+                                        class="preset-icon flex-none w-10 h-10 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center">
+                                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="preset-name font-semibold text-gray-900 text-sm">Editorial
+                                                Blog</span>
+                                            <span
+                                                class="preset-tag px-2 py-0.5 rounded bg-gray-100 text-[9px] font-bold text-gray-500 uppercase tracking-wide">Elegant</span>
+                                        </div>
+                                        <p class="preset-desc text-xs text-gray-500 leading-relaxed">Playfair +
+                                            Merriweather for longform content.</p>
+                                        <div class="flex items-center gap-3 mt-2">
+                                            <span class="text-[10px] text-gray-400 font-mono">56px • 32px • 18px</span>
+                                            <div class="w-3 h-3 rounded-full bg-gray-500"></div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <!-- Tech Startup / SaaS -->
+                                <button type="button"
+                                    class="preset-card cursor-pointer p-4 rounded-xl border border-gray-200 bg-white hover:border-pink-500/50 text-left flex items-start gap-4 shadow-sm transition-all duration-200 group"
+                                    data-preset="saas">
+                                    <div
+                                        class="preset-icon flex-none w-10 h-10 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center">
+                                        <i data-lucide="rocket" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="preset-name font-semibold text-gray-900 text-sm">Tech Startup /
+                                                SaaS</span>
+                                            <span
+                                                class="preset-tag px-2 py-0.5 rounded bg-gray-100 text-[9px] font-bold text-gray-500 uppercase tracking-wide">Modern</span>
+                                        </div>
+                                        <p class="preset-desc text-xs text-gray-500 leading-relaxed">Bricolage Grotesque
+                                            + Inter with glassmorphism.</p>
+                                        <div class="flex items-center gap-3 mt-2">
+                                            <span class="text-[10px] text-gray-400 font-mono">64px • 28px • 16px</span>
+                                            <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <!-- E-commerce Store -->
+                                <button type="button"
+                                    class="preset-card cursor-pointer p-4 rounded-xl border border-gray-200 bg-white hover:border-pink-500/50 text-left flex items-start gap-4 shadow-sm transition-all duration-200 group"
+                                    data-preset="ecommerce">
+                                    <div
+                                        class="preset-icon flex-none w-10 h-10 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center">
+                                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="preset-name font-semibold text-gray-900 text-sm">E-commerce
+                                                Store</span>
+                                            <span
+                                                class="preset-tag px-2 py-0.5 rounded bg-gray-100 text-[9px] font-bold text-gray-500 uppercase tracking-wide">Mobile</span>
+                                        </div>
+                                        <p class="preset-desc text-xs text-gray-500 leading-relaxed">Plus Jakarta Sans
+                                            for accessible product layouts.</p>
+                                        <div class="flex items-center gap-3 mt-2">
+                                            <span class="text-[10px] text-gray-400 font-mono">40px • 24px • 16px</span>
+                                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <!-- Creative Portfolio -->
+                                <button type="button"
+                                    class="preset-card cursor-pointer p-4 rounded-xl border border-gray-200 bg-white hover:border-pink-500/50 text-left flex items-start gap-4 shadow-sm transition-all duration-200 group"
+                                    data-preset="portfolio">
+                                    <div
+                                        class="preset-icon flex-none w-10 h-10 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center">
+                                        <i data-lucide="palette" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="preset-name font-semibold text-gray-900 text-sm">Creative
+                                                Portfolio</span>
+                                            <span
+                                                class="preset-tag px-2 py-0.5 rounded bg-gray-100 text-[9px] font-bold text-gray-500 uppercase tracking-wide">Artistic</span>
+                                        </div>
+                                        <p class="preset-desc text-xs text-gray-500 leading-relaxed">Brutalist design
+                                            with Oswald and dramatic shadows.</p>
+                                        <div class="flex items-center gap-3 mt-2">
+                                            <span class="text-[10px] text-gray-400 font-mono">64px • 24px • 16px</span>
+                                            <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <!-- Gaming Community -->
+                                <button type="button"
+                                    class="preset-card cursor-pointer p-4 rounded-xl border border-gray-200 bg-white hover:border-pink-500/50 text-left flex items-start gap-4 shadow-sm transition-all duration-200 group"
+                                    data-preset="gaming">
+                                    <div
+                                        class="preset-icon flex-none w-10 h-10 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center">
+                                        <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="preset-name font-semibold text-gray-900 text-sm">Gaming
+                                                Community</span>
+                                            <span
+                                                class="preset-tag px-2 py-0.5 rounded bg-gray-100 text-[9px] font-bold text-gray-500 uppercase tracking-wide">Dark</span>
+                                        </div>
+                                        <p class="preset-desc text-xs text-gray-500 leading-relaxed">Neumorphic dark
+                                            theme with vibrant orange accents.</p>
+                                        <div class="flex items-center gap-3 mt-2">
+                                            <span class="text-[10px] text-gray-400 font-mono">64px • 24px • 16px</span>
+                                            <div class="w-3 h-3 rounded-full bg-orange-500"></div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Styling Builder -->
+                    <div class="space-y-6 pt-4 border-t border-gray-200" id="styling-builder">
+                        <button type="button"
+                            class="w-full flex items-center justify-between group focus:outline-none cursor-pointer"
+                            id="toggle-styling">
+                            <label
+                                class="text-xs uppercase tracking-wider font-semibold text-gray-400 cursor-pointer group-hover:text-gray-600 transition-colors pointer-events-none">Styling
+                                Builder</label>
+                            <i data-lucide="chevron-down"
+                                class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-transform duration-200"
+                                id="icon-styling"></i>
+                        </button>
+
+                        <div id="content-styling" class="space-y-6 transition-all duration-300 origin-top">
+                            <!-- 1. Style Type -->
+                            <div class="space-y-2">
+                                <label class="text-xs text-gray-500">Style Type</label>
+                                <input type="hidden" id="visual-style" value="clean">
+                                <div class="grid grid-cols-2 gap-3" data-group="visual-style">
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="flat">
+                                        <div class="p-2 rounded-full bg-gray-100 text-gray-600"><i data-lucide="square"
+                                                class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Flat</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="outline">
+                                        <div class="p-2 rounded-full bg-gray-100 text-gray-600"><i data-lucide="circle"
+                                                class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Outline</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-pink-500 bg-pink-50 text-left flex flex-col items-center gap-2 shadow-md"
+                                        data-value="clean">
+                                        <div class="p-2 rounded-full bg-pink-100 text-pink-600"><i data-lucide="layers"
+                                                class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-pink-600 font-semibold">Minimalist</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="glassmorphism">
+                                        <div class="p-2 rounded-full bg-gray-100 text-gray-600"><i
+                                                data-lucide="droplets" class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Glass</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="neumorphism">
+                                        <div class="p-2 rounded-full bg-gray-100 text-gray-600"><i
+                                                data-lucide="sparkles" class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Soft
+                                            UI</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="material">
+                                        <div class="p-2 rounded-full bg-gray-100 text-gray-600"><i data-lucide="brush"
+                                                class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Material</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="brutalist">
+                                        <div class="p-2 rounded-full bg-gray-100 text-gray-600"><i
+                                                data-lucide="triangle" class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Brutalist</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 2. Theme -->
+                            <div class="space-y-2">
+                                <label class="text-xs text-gray-500">Theme</label>
+                                <input type="hidden" id="theme-pref" value="light">
+                                <div class="grid grid-cols-3 gap-3" data-group="theme-pref">
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-pink-500 bg-pink-50 text-left flex flex-col items-center gap-2 shadow-md"
+                                        data-value="light">
+                                        <div class="p-2 rounded-full bg-pink-100 text-pink-600"><i data-lucide="sun"
+                                                class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-pink-600 font-semibold">Light</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="dark">
+                                        <div class="p-2 rounded-full bg-gray-100 text-gray-600"><i data-lucide="moon"
+                                                class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Dark</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="auto">
+                                        <div class="p-2 rounded-full bg-gray-100 text-gray-600"><i data-lucide="monitor"
+                                                class="w-4 h-4"></i></div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Auto</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 3. Primary Color & Palette -->
+                            <div class="space-y-4">
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Primary Color</label>
+                                    <!-- Using existing color-picker ID for JS compatibility but updated layout -->
+                                    <div class="grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-10 gap-3 mb-4"
+                                        id="color-picker">
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-blue-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="blue" data-color="#3B82F6"
+                                            onclick="document.getElementById('selected-color').value='#3B82F6'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-red-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="red" data-color="#EF4444"
+                                            onclick="document.getElementById('selected-color').value='#EF4444'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-green-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="green" data-color="#22C55E"
+                                            onclick="document.getElementById('selected-color').value='#22C55E'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-yellow-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="yellow" data-color="#EAB308"
+                                            onclick="document.getElementById('selected-color').value='#EAB308'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-purple-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="purple" data-color="#A855F7"
+                                            onclick="document.getElementById('selected-color').value='#A855F7'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-pink-500 border-2 transition-all duration-200 hover:scale-110 border-gray-900 dark:border-white shadow-lg ring-2 ring-offset-2 ring-gray-400 dark:ring-gray-600 scale-110"
+                                            title="pink" data-color="#EC4899"
+                                            onclick="document.getElementById('selected-color').value='#EC4899'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-indigo-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="indigo" data-color="#6366F1"
+                                            onclick="document.getElementById('selected-color').value='#6366F1'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-gray-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="gray" data-color="#6B7280"
+                                            onclick="document.getElementById('selected-color').value='#6B7280'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-orange-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="orange" data-color="#F97316"
+                                            onclick="document.getElementById('selected-color').value='#F97316'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-teal-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="teal" data-color="#14B8A6"
+                                            onclick="document.getElementById('selected-color').value='#14B8A6'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-cyan-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="cyan" data-color="#06B6D4"
+                                            onclick="document.getElementById('selected-color').value='#06B6D4'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-emerald-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="emerald" data-color="#10B981"
+                                            onclick="document.getElementById('selected-color').value='#10B981'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-lime-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="lime" data-color="#84CC16"
+                                            onclick="document.getElementById('selected-color').value='#84CC16'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-amber-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="amber" data-color="#F59E0B"
+                                            onclick="document.getElementById('selected-color').value='#F59E0B'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-rose-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="rose" data-color="#F43F5E"
+                                            onclick="document.getElementById('selected-color').value='#F43F5E'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-violet-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="violet" data-color="#8B5CF6"
+                                            onclick="document.getElementById('selected-color').value='#8B5CF6'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-fuchsia-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="fuchsia" data-color="#D946EF"
+                                            onclick="document.getElementById('selected-color').value='#D946EF'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-sky-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="sky" data-color="#0EA5E9"
+                                            onclick="document.getElementById('selected-color').value='#0EA5E9'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-slate-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="slate" data-color="#64748B"
+                                            onclick="document.getElementById('selected-color').value='#64748B'; updatePreview();"></button>
+                                        <button type="button"
+                                            class="cursor-pointer w-8 h-8 rounded-full bg-zinc-500 border-2 transition-all duration-200 hover:scale-110 border-gray-300 dark:border-neutral-600"
+                                            title="zinc" data-color="#71717A"
+                                            onclick="document.getElementById('selected-color').value='#71717A'; updatePreview();"></button>
+                                    </div>
+                                    <input type="hidden" id="selected-color" value="#EC4899">
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Color Palette</label>
+                                    <input type="hidden" id="color-palette" value="modern">
+                                    <div class="grid grid-cols-2 gap-3" data-group="color-palette">
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-3 rounded-lg border border-pink-500 bg-pink-50 text-left shadow-md"
+                                            data-value="modern">
+                                            <div class="flex gap-1 mb-2">
+                                                <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                                <div class="w-3 h-3 rounded-full bg-gray-100"></div>
+                                                <div class="w-3 h-3 rounded-full bg-gray-800"></div>
+                                            </div>
+                                            <span
+                                                class="text-[10px] uppercase font-medium text-pink-600 font-semibold">Modern</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left shadow-sm"
+                                            data-value="vibrant">
+                                            <div class="flex gap-1 mb-2">
+                                                <div class="w-3 h-3 rounded-full bg-pink-400"></div>
+                                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                                <div class="w-3 h-3 rounded-full bg-blue-400"></div>
+                                            </div>
+                                            <span
+                                                class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Vibrant</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left shadow-sm"
+                                            data-value="earth">
+                                            <div class="flex gap-1 mb-2">
+                                                <div class="w-3 h-3 rounded-full bg-amber-600"></div>
+                                                <div class="w-3 h-3 rounded-full bg-orange-500"></div>
+                                                <div class="w-3 h-3 rounded-full bg-green-700"></div>
+                                            </div>
+                                            <span
+                                                class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Earth</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 text-left shadow-sm"
+                                            data-value="monochrome">
+                                            <div class="flex gap-1 mb-2">
+                                                <div class="w-3 h-3 rounded-full bg-gray-900"></div>
+                                                <div class="w-3 h-3 rounded-full bg-gray-500"></div>
+                                                <div class="w-3 h-3 rounded-full bg-gray-300"></div>
+                                            </div>
+                                            <span
+                                                class="text-[10px] uppercase font-medium text-gray-600 font-semibold group-hover:text-gray-900">Mono</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Shadow & Device -->
+                            <div class="space-y-4">
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Shadow Depth</label>
+                                    <input type="hidden" id="shadow-depth" value="medium">
+                                    <div class="grid grid-cols-3 gap-2" data-group="shadow-depth">
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-gray-200 text-center hover:border-pink-500/50 bg-white"
+                                            data-value="none"><span
+                                                class="text-[10px] text-gray-600 font-medium hover:text-gray-900">None</span></button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-gray-200 text-center hover:border-pink-500/50 bg-white"
+                                            data-value="small"><span
+                                                class="text-[10px] text-gray-600 font-medium hover:text-gray-900">Small</span></button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-pink-500 bg-pink-50 text-center shadow-md"
+                                            data-value="medium"><span
+                                                class="text-[10px] text-pink-600 font-semibold">Medium</span></button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-gray-200 text-center hover:border-pink-500/50 bg-white"
+                                            data-value="large"><span
+                                                class="text-[10px] text-gray-600 font-medium hover:text-gray-900">Large</span></button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-gray-200 text-center hover:border-pink-500/50 bg-white"
+                                            data-value="xl"><span
+                                                class="text-[10px] text-gray-600 font-medium hover:text-gray-900">XL</span></button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-gray-200 text-center hover:border-pink-500/50 bg-white"
+                                            data-value="2xl"><span
+                                                class="text-[10px] text-gray-600 font-medium hover:text-gray-900">2XL</span></button>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Device Target</label>
+                                    <input type="hidden" id="device-opt" value="desktop">
+                                    <div class="grid grid-cols-3 gap-2" data-group="device-opt">
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-pink-500 bg-pink-50 flex flex-col items-center gap-1 shadow-md"
+                                            data-value="desktop">
+                                            <i data-lucide="monitor" class="w-3 h-3 text-pink-600"></i>
+                                            <span class="text-[10px] text-pink-600 font-semibold">Desktop</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 flex flex-col items-center gap-1 shadow-sm"
+                                            data-value="tablet">
+                                            <i data-lucide="tablet" class="w-3 h-3 text-gray-600"></i>
+                                            <span
+                                                class="text-[10px] text-gray-600 font-medium group-hover:text-gray-900">Tablet</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card cursor-pointer p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 flex flex-col items-center gap-1 shadow-sm"
+                                            data-value="mobile">
+                                            <i data-lucide="smartphone" class="w-3 h-3 text-gray-600"></i>
+                                            <span
+                                                class="text-[10px] text-gray-600 font-medium group-hover:text-gray-900">Mobile</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typography Builder -->
+                    <div class="space-y-6 pt-4 border-t border-gray-200" id="typography-builder">
+                        <button type="button"
+                            class="w-full flex items-center justify-between group focus:outline-none cursor-pointer"
+                            id="toggle-typography">
+                            <label
+                                class="text-xs uppercase tracking-wider font-semibold text-gray-400 cursor-pointer group-hover:text-gray-600 transition-colors pointer-events-none">Typography
+                                Builder</label>
+                            <i data-lucide="chevron-down"
+                                class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-transform duration-200"
+                                id="icon-typography"></i>
+                        </button>
+
+                        <div id="content-typography" class="space-y-6 transition-all duration-300 origin-top">
+
+                            <!-- 1. Font Pairing -->
+                            <div class="space-y-4">
+                                <h3 class="text-sm font-medium text-gray-900">1. Font Pairing Strategy</h3>
+                                <input type="hidden" id="font-pairing" value="none">
+                                <div class="grid grid-cols-1 gap-3" data-group="font-pairing">
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-4 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 flex flex-col items-start gap-1 shadow-sm"
+                                        data-value="classic">
+                                        <div class="flex items-center gap-2 w-full mb-1">
+                                            <div
+                                                class="px-2 py-0.5 rounded bg-pink-100/50 border border-pink-200 text-[10px] font-bold text-pink-700 tracking-wider uppercase">
+                                                Classic</div>
+                                            <span class="text-[10px] text-pink-500 font-medium ml-auto">Serif +
+                                                Sans</span>
+                                        </div>
+                                        <div class="flex flex-col gap-0.5">
+                                            <span class="text-lg text-gray-900 leading-tight font-[700]"
+                                                style="font-family: var(--font-playfair)">Playfair Display</span>
+                                            <span class="text-xs text-gray-600 font-[400]"
+                                                style="font-family: var(--font-sans)">Paired with Inter</span>
+                                        </div>
+                                    </button>
+
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-4 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 flex flex-col items-start gap-1 shadow-sm"
+                                        data-value="modern">
+                                        <div class="flex items-center gap-2 w-full mb-1">
+                                            <div
+                                                class="px-2 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-500 tracking-wider uppercase">
+                                                Modern</div>
+                                            <span class="text-[10px] text-gray-400 font-medium ml-auto">Sans +
+                                                Sans</span>
+                                        </div>
+                                        <div class="flex flex-col gap-0.5">
+                                            <span class="text-lg text-gray-900 leading-tight font-[600]"
+                                                style="font-family: var(--font-display)">Bricolage</span>
+                                            <span class="text-xs text-gray-600 font-[400]"
+                                                style="font-family: var(--font-sans)">Paired with Inter</span>
+                                        </div>
+                                    </button>
+
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-4 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 flex flex-col items-start gap-1 shadow-sm"
+                                        data-value="editorial">
+                                        <div class="flex items-center gap-2 w-full mb-1">
+                                            <div
+                                                class="px-2 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-500 tracking-wider uppercase">
+                                                Editorial</div>
+                                            <span class="text-[10px] text-gray-400 font-medium ml-auto">Serif +
+                                                Serif</span>
+                                        </div>
+                                        <div class="flex flex-col gap-0.5">
+                                            <span class="text-lg text-gray-900 leading-tight font-[700]"
+                                                style="font-family: var(--font-serif)">Merriweather</span>
+                                            <span class="text-xs text-gray-600 font-[400]"
+                                                style="font-family: var(--font-ibm)">Paired with IBM Plex
+                                                Serif</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 2. Typeface Family -->
+                            <div class="space-y-4">
+                                <h3 class="text-sm font-medium text-gray-900">2. Typeface Family</h3>
+                                <input type="hidden" id="type-family" value="sans">
+                                <div class="grid grid-cols-3 gap-3" data-group="type-family">
+                                    <!-- Sans Serif (Selected) -->
+                                    <button type="button"
+                                        class="option-card group relative p-3 rounded-lg border border-pink-500 bg-pink-50 transition-all text-left flex flex-col items-center gap-2 cursor-pointer shadow-md"
+                                        data-value="sans">
+                                        <div class="p-2 rounded-full bg-pink-100 text-pink-600"><i data-lucide="type"
+                                                class="w-4 h-4"></i></div>
+                                        <span class="text-[10px] uppercase font-medium text-pink-600 font-semibold">Sans
+                                            Serif</span>
+                                    </button>
+                                    <!-- Serif -->
+                                    <button type="button"
+                                        class="option-card group relative p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all text-left flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                        data-value="serif">
+                                        <div
+                                            class="p-2 rounded-full bg-gray-100 text-gray-600 group-hover:text-gray-900">
+                                            <i data-lucide="text-quote" class="w-4 h-4"></i>
+                                        </div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 group-hover:text-gray-900 font-semibold">Serif</span>
+                                    </button>
+                                    <!-- Monospace -->
+                                    <button type="button"
+                                        class="option-card group relative p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all text-left flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                        data-value="mono">
+                                        <div
+                                            class="p-2 rounded-full bg-gray-100 text-gray-600 group-hover:text-gray-900">
+                                            <i data-lucide="code" class="w-4 h-4"></i>
+                                        </div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 group-hover:text-gray-900 font-semibold">Monospace</span>
+                                    </button>
+                                    <!-- Display -->
+                                    <button type="button"
+                                        class="option-card group relative p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all text-left flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                        data-value="display">
+                                        <div
+                                            class="p-2 rounded-full bg-gray-100 text-gray-600 group-hover:text-gray-900">
+                                            <i data-lucide="monitor" class="w-4 h-4"></i>
+                                        </div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 group-hover:text-gray-900 font-semibold">Display</span>
+                                    </button>
+                                    <!-- Grotesque -->
+                                    <button type="button"
+                                        class="option-card group relative p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all text-left flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                        data-value="grotesque">
+                                        <div
+                                            class="p-2 rounded-full bg-gray-100 text-gray-600 group-hover:text-gray-900">
+                                            <i data-lucide="case-upper" class="w-4 h-4"></i>
+                                        </div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 group-hover:text-gray-900 font-semibold">Grotesque</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 3. Font Size Scale -->
+                            <div class="space-y-4">
+                                <h3 class="text-sm font-medium text-gray-900">3. Font Size Scale</h3>
+
+                                <!-- Heading Size -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Heading Size</label>
+                                    <input type="hidden" id="size-heading" value="large">
+                                    <div class="grid grid-cols-3 gap-2" data-group="size-heading">
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                            data-value="small">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 font-bold text-xs">
+                                                Aa</div>
+                                            <span
+                                                class="text-[10px] text-gray-600 group-hover:text-gray-900 font-medium">20-32px</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                            data-value="medium">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 font-bold text-sm">
+                                                Aa</div>
+                                            <span
+                                                class="text-[10px] text-gray-600 group-hover:text-gray-900 font-medium">32-40px</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-md"
+                                            data-value="large">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-pink-100 text-pink-600 font-bold text-base">
+                                                Aa</div>
+                                            <span class="text-[10px] text-pink-600 font-semibold">48-64px</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Subheading Size -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Subheading Size</label>
+                                    <input type="hidden" id="size-subheading" value="small">
+                                    <div class="grid grid-cols-3 gap-2" data-group="size-subheading">
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-md"
+                                            data-value="small">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-pink-100 text-pink-600 font-semibold text-xs">
+                                                Aa</div>
+                                            <span class="text-[10px] text-pink-600 font-semibold">16-20px</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                            data-value="medium">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 font-semibold text-sm">
+                                                Aa</div>
+                                            <span
+                                                class="text-[10px] text-gray-600 group-hover:text-gray-900 font-medium">20-28px</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                            data-value="large">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 font-semibold text-base">
+                                                Aa</div>
+                                            <span
+                                                class="text-[10px] text-gray-600 group-hover:text-gray-900 font-medium">32-40px</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Body Size -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Body Size</label>
+                                    <input type="hidden" id="size-body" value="medium">
+                                    <div class="grid grid-cols-3 gap-2" data-group="size-body">
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                            data-value="small">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 text-xs">
+                                                Aa</div>
+                                            <span
+                                                class="text-[10px] text-gray-600 group-hover:text-gray-900 font-medium">12-14px</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-md"
+                                            data-value="medium">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-pink-100 text-pink-600 text-sm">
+                                                Aa</div>
+                                            <span class="text-[10px] text-pink-600 font-semibold">14-16px</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-3 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-2 cursor-pointer shadow-sm"
+                                            data-value="large">
+                                            <div
+                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 text-base">
+                                                Aa</div>
+                                            <span
+                                                class="text-[10px] text-gray-600 group-hover:text-gray-900 font-medium">16-18px</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Font Weight -->
+                            <div class="space-y-4">
+                                <h3 class="text-sm font-medium text-gray-900">4. Font Weight</h3>
+
+                                <!-- Heading Weight -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Heading Weight</label>
+                                    <input type="hidden" id="weight-heading" value="600">
+                                    <div class="grid grid-cols-4 gap-2" data-group="weight-heading">
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="400">
+                                            <span class="text-lg font-[400] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">400</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="500">
+                                            <span class="text-lg font-[500] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">500</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-md"
+                                            data-value="600">
+                                            <span class="text-lg font-[600] text-pink-600">A</span>
+                                            <span class="text-[8px] text-pink-600 font-semibold">600</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="700">
+                                            <span class="text-lg font-[700] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">700</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Subheading Weight -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Subheading Weight</label>
+                                    <input type="hidden" id="weight-subheading" value="500">
+                                    <div class="grid grid-cols-4 gap-2" data-group="weight-subheading">
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="300">
+                                            <span class="text-lg font-[300] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">300</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="400">
+                                            <span class="text-lg font-[400] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">400</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-md"
+                                            data-value="500">
+                                            <span class="text-lg font-[500] text-pink-600">A</span>
+                                            <span class="text-[8px] text-pink-600 font-semibold">500</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="600">
+                                            <span class="text-lg font-[600] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">600</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Body Weight -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Body Weight</label>
+                                    <input type="hidden" id="weight-body" value="400">
+                                    <div class="grid grid-cols-4 gap-2" data-group="weight-body">
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="300">
+                                            <span class="text-lg font-[300] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">300</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-md"
+                                            data-value="400">
+                                            <span class="text-lg font-[400] text-pink-600">A</span>
+                                            <span class="text-[8px] text-pink-600 font-semibold">400</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="500">
+                                            <span class="text-lg font-[500] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">500</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="600">
+                                            <span class="text-lg font-[600] text-gray-600">A</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">600</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. Letter Spacing -->
+                            <div class="space-y-4">
+                                <h3 class="text-sm font-medium text-gray-900">5. Letter Spacing</h3>
+
+                                <!-- Heading Spacing -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Heading Spacing</label>
+                                    <input type="hidden" id="spacing-heading" value="-0.02em">
+                                    <div class="grid grid-cols-4 gap-2" data-group="spacing-heading">
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="-0.05em">
+                                            <span class="text-[10px] text-gray-600 tracking-[-0.05em]">Typ</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">-0.05em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-md"
+                                            data-value="-0.02em">
+                                            <span class="text-[10px] text-pink-600 tracking-[-0.02em]">Typ</span>
+                                            <span class="text-[8px] text-pink-600 font-semibold">-0.02em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="0em">
+                                            <span class="text-[10px] text-gray-600 tracking-normal">Typ</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">0em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="0.02em">
+                                            <span class="text-[10px] text-gray-600 tracking-wide">Typ</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">0.02em</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Body Spacing -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">Body Text Spacing</label>
+                                    <input type="hidden" id="spacing-body" value="0em">
+                                    <div class="grid grid-cols-4 gap-2" data-group="spacing-body">
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="-0.02em">
+                                            <span class="text-[10px] text-gray-600 tracking-[-0.02em]">Typ</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">-0.02em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-md"
+                                            data-value="0em">
+                                            <span class="text-[10px] text-pink-600 tracking-normal">Typ</span>
+                                            <span class="text-[8px] text-pink-600 font-semibold">0em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="0.01em">
+                                            <span class="text-[10px] text-gray-600 tracking-wide">Typ</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">0.01em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="0.02em">
+                                            <span class="text-[10px] text-gray-600 tracking-wider">Typ</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">0.02em</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- ALL CAPS Spacing -->
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-500">ALL CAPS Spacing</label>
+                                    <input type="hidden" id="spacing-caps" value="0.05em">
+                                    <div class="grid grid-cols-4 gap-2" data-group="spacing-caps">
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="0.02em">
+                                            <span class="text-[10px] text-gray-600 tracking-wide">TYP</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">0.02em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-pink-500 bg-pink-50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-md"
+                                            data-value="0.05em">
+                                            <span class="text-[10px] text-pink-600 tracking-wider">TYP</span>
+                                            <span class="text-[8px] text-pink-600 font-semibold">0.05em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="0.1em">
+                                            <span class="text-[10px] text-gray-600 tracking-widest">TYP</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">0.1em</span>
+                                        </button>
+                                        <button type="button"
+                                            class="option-card p-2 rounded-lg border border-gray-200 bg-white hover:border-pink-500/50 transition-all flex flex-col items-center gap-1 cursor-pointer shadow-sm"
+                                            data-value="0.15em">
+                                            <span class="text-[10px] text-gray-600 tracking-widest">TYP</span>
+                                            <span
+                                                class="text-[8px] text-gray-600 group-hover:text-gray-900 font-medium">0.15em</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Specifics -->
+                    <div class="space-y-2 pt-4 border-t border-gray-200">
+                        <label class="text-xs uppercase tracking-wider font-semibold text-gray-400">Specific
+                            Requirements</label>
+                        <textarea id="custom-reqs" rows="3" placeholder="Additional details..."
+                            class="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 transition-all resize-none text-gray-900"></textarea>
+                    </div>
+                </form>
+            </div>
+        </aside>
+
+        <!-- RIGHT PANEL: Canvas & Output -->
+        <div
+            class="flex-1 md:overflow-y-auto bg-gray-50 custom-scrollbar p-4 sm:p-6 md:p-8 lg:p-12 relative flex flex-col gap-6 md:gap-8 items-center">
+
+            <!-- Live Preview Frame -->
+            <div class="w-full max-w-4xl space-y-4">
+                <button type="button"
+                    class="w-full flex items-center justify-between group focus:outline-none cursor-pointer"
+                    id="toggle-preview">
+                    <div class="flex items-center gap-4">
+                        <h2
+                            class="text-sm font-semibold text-gray-400 uppercase tracking-wider group-hover:text-gray-200 transition-colors">
+                            Live Canvas</h2>
+                        <span class="text-xs text-gray-600 group-hover:text-gray-500 transition-colors">Simulated
+                            Browser View</span>
+                    </div>
+                    <i data-lucide="chevron-down"
+                        class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-transform duration-200"
+                        id="icon-preview" style="transform: rotate(-90deg);"></i>
+                </button>
+
+                <div id="content-preview" class="transition-all duration-300 origin-top hidden">
+
+                    <!-- Browser Window -->
+                    <div class="rounded-xl overflow-hidden border border-gray-200 shadow-2xl bg-white">
+                        <!-- Title Bar -->
+                        <div class="h-10 bg-gray-50 border-b border-gray-100 flex items-center px-4 gap-4">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <div class="flex-1 flex justify-center">
+                                <div class="w-64 h-6 rounded-md bg-gray-100 flex items-center justify-center">
+                                    <span class="text-[10px] text-gray-400 font-mono">localhost:3000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div id="preview-container"
+                            class="w-full p-12 lg:p-16 bg-white transition-colors duration-500 min-h-[400px] flex flex-col justify-center items-start">
+                            <div class="space-y-3 max-w-2xl">
+                                <span id="preview-tag"
+                                    class="px-3 py-1 rounded-full bg-gray-100 text-gray-800 text-xs font-medium uppercase tracking-wider transition-all duration-300">
+                                    New Feature
+                                </span>
+                                <h1 id="preview-heading" class="transition-all duration-300">Making the world a better
+                                    place
+                                    through design.</h1>
+                                <h2 id="preview-subheading" class="transition-all duration-300 text-gray-600">Create
+                                    stunning interfaces with AI-powered prompts.</h2>
+                                <p id="preview-body" class="max-w-prose transition-all duration-300 text-gray-700">
+                                    Typography is the art and technique of arranging type to make written language
+                                    legible,
+                                    readable, and appealing when displayed. The arrangement of type involves selecting
+                                    typefaces, point sizes, line lengths, line-spacing, and letter-spacing.
+                                </p>
+                                <div class="pt-4">
+                                    <button id="preview-button"
+                                        class="cursor-pointer px-8 py-4 bg-black text-white rounded-lg transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1">
+                                        GET STARTED
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="w-full max-w-4xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Generated Output</h2>
+                    <div class="flex gap-2">
+                        <button id="copy-btn"
+                            class="cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-md bg-white hover:bg-gray-50 text-xs font-medium text-gray-600 border border-gray-200 transition-all shadow-sm">
+                            <i data-lucide="copy" class="w-3 h-3"></i>
+                            <span>Copy Prompt</span>
+                        </button>
+                        <button id="regenerate-btn"
+                            class="cursor-pointer flex items-center gap-2 px-3 py-1.5 rounded-md bg-pink-600 hover:bg-pink-500 text-white text-xs font-medium shadow-lg shadow-pink-500/20 transition-all">
+                            <i data-lucide="sparkles" class="w-3 h-3"></i>
+                            <span>Generate</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative group w-full">
+                    <div
+                        class="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl opacity-10 group-hover:opacity-20 transition duration-500 blur">
+                    </div>
+                    <div
+                        class="relative w-full h-[300px] bg-white rounded-xl border border-gray-200 p-6 overflow-hidden shadow-sm">
+                        <pre id="prompt-output"
+                            class="whitespace-pre-wrap font-mono text-xs text-gray-600 h-full overflow-y-auto custom-scrollbar leading-relaxed"></pre>
+
+                        <!-- Empty State -->
+                        <div id="empty-state"
+                            class="absolute inset-0 flex flex-col items-center justify-center bg-white/90 z-10 text-center p-6 backdrop-blur-[2px]">
+                            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mb-3">
+                                <i data-lucide="terminal" class="w-6 h-6 text-pink-400"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-400">Ready to Generate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js?v=1.0"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
