@@ -44,6 +44,14 @@ Add polish to your prompts with technical motion specs:
 ### 👁️ Live Canvas v1.2
 A simulated browser environment that updates in real-time as you tweak your configuration, showing exactly how your typography and colors harmonized.
 
+### 🧵 Stitch UI Generation
+Generate real, interactive web components from your prompts using the Stitch API:
+- **Instant Generation**: Click 'Generate' when enabled to turn your prompt into code.
+- **Side-by-Side Preview**: View the generated UI in a live iframe alongside the design prompt.
+- **Code Access**: Copy the generated HTML directly for use in your projects.
+- **Device Targeted**: Optimizes code generation based on your selected device target.
+
+
 ---
 
 ## 🚀 Getting Started
