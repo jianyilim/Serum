@@ -54,19 +54,98 @@
     <main class="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
 
         <!-- LEFT PANEL: Controls (Inspector) -->
-        <aside
-            class="w-full md:w-[400px] flex-none border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 md:overflow-y-auto bg-white dark:bg-gray-900 custom-scrollbar transition-colors duration-300">
-            <div class="p-6 space-y-8">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">Configuration
-                    </h1>
-                    <p
-                        class="text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-500 text-sm leading-relaxed transition-colors">
-                        Customize your design system preferences below.
-                    </p>
+        <aside id="sidebar"
+            class="w-full md:w-[400px] flex-none border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 md:overflow-y-auto bg-white dark:bg-gray-900 custom-scrollbar transition-all duration-300 ease-in-out relative">
+            <div class="p-6 space-y-8 min-w-[400px]">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">Configuration
+                        </h1>
+                        <p
+                            class="text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-500 text-sm leading-relaxed transition-colors">
+                            Customize your design system preferences below.
+                        </p>
+                    </div>
+                    <button id="sidebar-collapse-btn"
+                        class="flex-none mt-1 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer"
+                        aria-label="Collapse sidebar" title="Collapse sidebar">
+                        <i data-lucide="panel-left-close" class="w-4 h-4"></i>
+                    </button>
                 </div>
 
                 <form id="serum-form" class="space-y-8">
+                    <!-- User Requirement -->
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2">
+                            <label class="text-xs uppercase tracking-wider font-semibold text-gray-400 dark:text-gray-500">Project Brief</label>
+                            <span class="px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-500 text-[9px] font-bold uppercase tracking-wide border border-pink-500/20">Required</span>
+                        </div>
+                        <textarea id="user-requirement" rows="3"
+                            placeholder="Describe what you want to build... e.g. 'A SaaS dashboard for a project management tool with kanban boards and team collaboration features'"
+                            class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 transition-all resize-none text-gray-900 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-600 leading-relaxed"></textarea>
+                    </div>
+
+                    <!-- Stitch Settings Panel -->
+                    <div class="space-y-6 pt-4 border-t border-gray-200 dark:border-gray-800" id="stitch-settings">
+                        <div class="flex items-center justify-between group cursor-pointer" id="toggle-stitch">
+                            <div class="flex items-center gap-2">
+                                <label
+                                    class="text-xs uppercase tracking-wider font-semibold text-gray-400 dark:text-gray-500 cursor-pointer pointer-events-none group-hover:text-gray-600 dark:text-gray-400 transition-colors">Stitch
+                                    UI Generation</label>
+                                <span
+                                    class="px-2 py-0.5 rounded-full bg-pink-500 text-[9px] font-bold text-white uppercase tracking-wide">BETA</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="stitch-enabled" class="sr-only peer">
+                                    <div
+                                        class="w-8 h-4 bg-gray-200 peer-focus:outline-none dark:bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-pink-600">
+                                    </div>
+                                </label>
+                                <i data-lucide="chevron-down"
+                                    class="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-300 transition-transform duration-200"
+                                    id="icon-stitch"></i>
+                            </div>
+                        </div>
+
+                        <div id="content-stitch" class="transition-all duration-300 origin-top hidden">
+                            <div
+                                class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg p-6 mb-6">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-6">Generate visual UI components
+                                    directly from your prompts using the Stitch API.</p>
+
+                                <div class="space-y-4">
+                                    <div class="space-y-2">
+                                        <label class="text-xs text-gray-500 dark:text-gray-400">Stitch API Key</label>
+                                        <input type="password" id="stitch-api-key" placeholder="Enter your API key..."
+                                            class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-pink-500/50 transition-all text-gray-900 dark:text-gray-200">
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="space-y-2">
+                                            <label class="text-xs text-gray-500 dark:text-gray-400">Device</label>
+                                            <select id="stitch-device"
+                                                class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-pink-500/50 transition-all text-gray-900 dark:text-gray-200 cursor-pointer">
+                                                <option value="DEVICE_TYPE_UNSPECIFIED">Agnostic</option>
+                                                <option value="MOBILE">Mobile</option>
+                                                <option value="DESKTOP" selected>Desktop</option>
+                                                <option value="TABLET">Tablet</option>
+                                            </select>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-xs text-gray-500 dark:text-gray-400">Model</label>
+                                            <select id="stitch-model"
+                                                class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-pink-500/50 transition-all text-gray-900 dark:text-gray-200 cursor-pointer">
+                                                <option value="GEMINI_3_FLASH" selected>Gemini 3 Flash</option>
+                                                <option value="GEMINI_3_PRO">Gemini 3 Pro</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Project Type Presets (Quick Start) -->
                     <div class="space-y-6 pt-4 border-t border-gray-200 dark:border-gray-800" id="project-presets">
                         <button type="button"
@@ -355,6 +434,16 @@
                                         </div>
                                         <span
                                             class="text-[10px] uppercase font-medium text-gray-600 dark:text-gray-400 font-semibold group-hover:text-gray-900 dark:text-gray-200">Clay</span>
+                                    </button>
+                                    <button type="button"
+                                        class="option-card cursor-pointer p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-pink-500/50 text-left flex flex-col items-center gap-2 shadow-sm"
+                                        data-value="technical">
+                                        <div
+                                            class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
+                                            <i data-lucide="terminal" class="w-4 h-4"></i>
+                                        </div>
+                                        <span
+                                            class="text-[10px] uppercase font-medium text-gray-600 dark:text-gray-400 font-semibold group-hover:text-gray-900 dark:text-gray-200">Tech</span>
                                     </button>
                                 </div>
                             </div>
@@ -1845,6 +1934,13 @@
         <div
             class="flex-1 md:overflow-y-auto bg-gray-50 dark:bg-gray-950/50 custom-scrollbar p-4 sm:p-6 md:p-8 lg:p-12 relative flex flex-col gap-6 md:gap-8 items-center transition-colors duration-300">
 
+            <!-- Sidebar Expand Button (visible when collapsed) -->
+            <button id="sidebar-expand-btn"
+                class="hidden fixed left-0 top-1/2 -translate-y-1/2 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg rounded-r-xl px-1.5 py-3 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all cursor-pointer"
+                aria-label="Expand sidebar" title="Expand sidebar">
+                <i data-lucide="panel-left-open" class="w-4 h-4"></i>
+            </button>
+
             <!-- Live Preview Frame -->
             <div class="w-full max-w-4xl space-y-4">
                 <button type="button"
@@ -1866,52 +1962,149 @@
                 <div id="content-preview" class="transition-all duration-300 origin-top hidden">
 
                     <!-- Browser Window -->
-                    <div
-                        class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-2xl bg-white dark:bg-gray-900">
-                        <!-- Title Bar -->
-                        <div
-                            class="h-10 bg-gray-50 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 flex items-center px-4 gap-4">
-                            <div class="flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl bg-white dark:bg-gray-900">
+                        <!-- Chrome Bar -->
+                        <div class="bg-gray-100 dark:bg-gray-800/80 border-b border-gray-200 dark:border-gray-700/80 px-4 py-2.5 flex items-center gap-3">
+                            <!-- Traffic lights -->
+                            <div class="flex items-center gap-1.5 flex-none">
+                                <div class="w-3 h-3 rounded-full bg-red-400 hover:bg-red-500 transition-colors cursor-pointer"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400 hover:bg-yellow-500 transition-colors cursor-pointer"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400 hover:bg-green-500 transition-colors cursor-pointer"></div>
                             </div>
-                            <div class="flex-1 flex justify-center">
-                                <div
-                                    class="w-64 h-6 rounded-md bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-                                    <span
-                                        class="text-[10px] text-gray-400 dark:text-gray-500 font-mono">localhost:3000</span>
-                                </div>
+                            <!-- Nav buttons -->
+                            <div class="flex items-center gap-1 flex-none">
+                                <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-400 dark:text-gray-500 transition-colors">
+                                    <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-400 dark:text-gray-500 transition-colors">
+                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-400 dark:text-gray-500 transition-colors">
+                                    <i data-lucide="rotate-cw" class="w-3 h-3"></i>
+                                </button>
+                            </div>
+                            <!-- URL bar -->
+                            <div class="flex-1 flex items-center gap-2 bg-white dark:bg-gray-900/80 border border-gray-200 dark:border-gray-700 rounded-lg px-3 h-7">
+                                <i data-lucide="lock" class="w-3 h-3 text-green-500 flex-none"></i>
+                                <span class="text-[11px] text-gray-500 dark:text-gray-400 font-mono truncate">localhost:5179</span>
+                            </div>
+                            <!-- Actions -->
+                            <div class="flex items-center gap-1 flex-none">
+                                <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-400 dark:text-gray-500 transition-colors">
+                                    <i data-lucide="star" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-400 dark:text-gray-500 transition-colors">
+                                    <i data-lucide="ellipsis" class="w-3.5 h-3.5"></i>
+                                </button>
                             </div>
                         </div>
 
                         <!-- Content -->
                         <div id="preview-container"
-                            class="w-full p-12 lg:p-16 bg-white transition-colors duration-500 min-h-[400px] flex flex-col justify-center items-start">
-                            <div class="space-y-3 max-w-2xl">
+                            class="w-full px-16 py-14 bg-white transition-colors duration-500 min-h-[380px] flex flex-col justify-center items-start">
+                            <div class="space-y-4 max-w-2xl">
                                 <span id="preview-tag"
-                                    class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 text-xs font-medium uppercase tracking-wider transition-all duration-300">
+                                    class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-semibold uppercase tracking-widest transition-all duration-300">
                                     New Feature
                                 </span>
-                                <h1 id="preview-heading" class="transition-all duration-300">Making the world a better
-                                    place
-                                    through design.</h1>
-                                <h2 id="preview-subheading"
-                                    class="transition-all duration-300 text-gray-600 dark:text-gray-400">Create
-                                    stunning interfaces with AI-powered prompts.</h2>
-                                <p id="preview-body" class="max-w-prose transition-all duration-300 text-gray-700">
-                                    Typography is the art and technique of arranging type to make written language
-                                    legible,
-                                    readable, and appealing when displayed. The arrangement of type involves selecting
-                                    typefaces, point sizes, line lengths, line-spacing, and letter-spacing.
+                                <h1 id="preview-heading" class="transition-all duration-300 leading-tight">Making the world a better place through design.</h1>
+                                <h2 id="preview-subheading" class="transition-all duration-300 text-gray-500 dark:text-gray-400 font-normal">Create stunning interfaces with AI-powered prompts.</h2>
+                                <p id="preview-body" class="max-w-prose transition-all duration-300 text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
+                                    Typography is the art and technique of arranging type to make written language legible, readable, and appealing. The arrangement of type involves selecting typefaces, point sizes, line lengths, and letter-spacing.
                                 </p>
-                                <div class="pt-4">
+                                <div class="flex items-center gap-3 pt-2">
                                     <button id="preview-button"
-                                        class="cursor-pointer px-8 py-4 bg-black text-white rounded-lg transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1">
-                                        GET STARTED
+                                        class="cursor-pointer px-6 py-3 bg-black dark:bg-white text-white dark:text-black text-sm font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                                        Get Started
+                                    </button>
+                                    <button class="cursor-pointer px-6 py-3 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
+                                        Learn more →
                                     </button>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Status bar -->
+                        <div class="h-6 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700/60 flex items-center px-4 justify-between">
+                            <span class="text-[9px] text-gray-400 dark:text-gray-600 font-mono">200 OK</span>
+                            <span class="text-[9px] text-gray-400 dark:text-gray-600 font-mono">Live Preview</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stitch Results Panel -->
+            <div id="stitch-results" class="w-full max-w-4xl space-y-4 hidden pb-12">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                            Generated Visual</h2>
+                        <div id="stitch-loading-spinner" class="hidden">
+                            <i data-lucide="loader-2" class="w-4 h-4 text-pink-500 animate-spin"></i>
+                        </div>
+                    </div>
+                    <div class="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-lg gap-1" id="stitch-tabs">
+                        <button data-tab="preview"
+                            class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all cursor-pointer bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm">Preview</button>
+                        <button data-tab="code"
+                            class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all cursor-pointer text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">Code</button>
+                    </div>
+                </div>
+
+                <div class="relative w-full rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-900 shadow-xl min-h-[500px]"
+                    id="stitch-container">
+
+                    <!-- Loading Overlay -->
+                    <div id="stitch-loading"
+                        class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm hidden">
+                        <div class="relative w-16 h-16 mb-6">
+                            <div class="absolute inset-0 rounded-full border-4 border-pink-100 dark:border-pink-900/30">
+                            </div>
+                            <div
+                                class="absolute inset-0 rounded-full border-4 border-t-pink-500 animate-spin transition-all duration-300">
+                            </div>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-900 dark:text-white mb-1" id="stitch-status">Crafting
+                            your interface...</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400" id="stitch-substatus">This usually takes
+                            30-45 seconds</p>
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="stitch-error"
+                        class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-red-50/95 dark:bg-red-950/20 backdrop-blur-sm hidden p-8 text-center">
+                        <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/40 text-red-600 mb-4 flex items-center justify-center">
+                            <i data-lucide="alert-circle" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-red-900 dark:text-red-200 mb-2">Generation Failed</h3>
+                        <p class="text-sm text-red-700 dark:text-red-300 max-w-xs mb-6" id="stitch-error-msg">An
+                            unexpected error occurred during UI generation.</p>
+                        <button id="stitch-retry-btn"
+                            class="px-6 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-sm font-medium transition-all shadow-lg shadow-red-600/20 cursor-pointer">
+                            Try Again
+                        </button>
+                    </div>
+
+                    <!-- Preview Content -->
+                    <div id="stitch-preview-tab" class="w-full h-full flex flex-col">
+                        <iframe id="stitch-iframe" class="w-full flex-1 border-none min-h-[600px]"
+                            sandbox="allow-scripts allow-same-origin"></iframe>
+                        <div class="h-12 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700 flex items-center px-4 justify-between">
+                            <span class="text-[10px] font-mono text-gray-400 uppercase tracking-widest">Instant UI Artifact</span>
+                        </div>
+                    </div>
+
+                    <!-- Code Content -->
+                    <div id="stitch-code-tab" class="w-full h-full hidden flex flex-col bg-gray-950">
+                        <div class="flex items-center justify-between px-4 py-2 bg-gray-900 border-b border-gray-800">
+                            <span class="text-[10px] font-mono text-gray-400 uppercase tracking-widest">index.html</span>
+                            <button id="stitch-copy-code" class="text-gray-400 hover:text-white transition-colors p-1 rounded hover:bg-gray-800 flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                <span class="text-[10px] font-bold uppercase tracking-wider">Copy</span>
+                            </button>
+                        </div>
+                        <div class="flex-1 overflow-auto custom-scrollbar p-6">
+                            <pre class="font-mono text-xs text-pink-400 leading-relaxed"><code id="stitch-code-output" class="whitespace-pre"></code></pre>
                         </div>
                     </div>
                 </div>
@@ -1961,7 +2154,7 @@
         </div>
     </main>
 
-    <script src="script.js?v=1.2"></script>
+    <script src="script.js?v=1.3"></script>
     <script>
         lucide.createIcons();
     </script>

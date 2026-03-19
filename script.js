@@ -72,6 +72,12 @@ const palettes = {
         colors: ["#F9A8D4", "#FDE047", "#A5F3FC"],
         desc: "Soft Pink, Yellow, Mint",
         prompt: "Use the pastel palette for a soft, playful aesthetic with supporting colors including soft pink, light yellow, and mint green."
+    },
+    technical: {
+        name: "Technical",
+        colors: ["#10B981", "#0F172A", "#334155"],
+        desc: "Emerald, Dark, Slate",
+        prompt: "Use the technical palette for a high-precision look with supporting colors including emerald-500, slate-900, and slate-700."
     }
 };
 
@@ -83,7 +89,8 @@ const visualStyles = {
     material: "Follow Material Design guidelines. Use elevation (shadows) to convey hierarchy and depth. Implement ripple effects for interactions and stick to standard grid layouts.",
     brutalist: "Use a Brutalist design style. Employ bold, raw, and geometric elements. Use high-contrast borders, monospaced fonts, and non-traditional layouts to create a striking, artistic impact.",
     neumorphism: "Implement Neumorphism (Soft UI). Create elements that appear to be extruded from the background using soft, multiple shadows (light and dark) to create a tactile, plastic-like feel.",
-    claymorphism: "Apply Claymorphism (Clay UI). Create a friendly, 3D extruded look using inflated rounded shapes, soft inner shadows, and vibrant pastel colors. Elements should look tactile and squishy."
+    claymorphism: "Apply Claymorphism (Clay UI). Create a friendly, 3D extruded look using inflated rounded shapes, soft inner shadows, and vibrant pastel colors. Elements should look tactile and squishy.",
+    technical: "Adopt a Technical / Developer-focused aesthetic. Use monospace fonts, dark terminals, code blocks, and high-contrast accent colors (like neon green or cyan). Emphasize data density and precision."
 };
 
 const themes = {
@@ -521,6 +528,52 @@ const cssMapping = {
     }
 };
 
+// Content for Preview (Dynamic updating based on Purpose)
+const previewContent = {
+    website: {
+        tag: "New Feature",
+        heading: "Making the world a better place through design.",
+        subheading: "Create stunning interfaces with AI-powered prompts.",
+        body: "Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing, and letter-spacing.",
+        button: "GET STARTED"
+    },
+    product: {
+        tag: "New Release",
+        heading: "The Future of Productivity is Here.",
+        subheading: "Experience the ultimate workflow tool designed for professionals.",
+        body: "Boost your team's efficiency with our intuitive platform. Seamlessly integrate with your favorite tools and automate repetitive tasks. Join thousands of teams who have already transformed their workflow.",
+        button: "PRE-ORDER NOW"
+    },
+    dashboard: {
+        tag: "Analytics",
+        heading: "Monthly Performance Overview",
+        subheading: "Track your key metrics in real-time.",
+        body: "Your user engagement has increased by 12% this week. Review the detailed breakdown below to see what's driving growth across your primary acquisition channels. Data is refreshed every 15 minutes.",
+        button: "VIEW REPORT"
+    },
+    article: {
+        tag: "Design",
+        heading: "The Principles of Modern UI Design",
+        subheading: "How usage of whitespace creates clarity.",
+        body: "In this article, we explore the fundamental concepts of whitespace, contrast, and typography hierarchy that define modern digital products. Learn how to guide user attention effectively using negative space and visual weight.",
+        button: "READ MORE"
+    },
+    portfolio: {
+        tag: "Case Study",
+        heading: "Reimagining the Digital Experience",
+        subheading: "A deep dive into the Serum Project.",
+        body: "Explore how we transformed a simple prompt generator into a full-fledged design system builder using modern web technologies. We faced significant challenges in state management and solved them with innovative patterns.",
+        button: "VIEW PROJECT"
+    },
+    mobile: {
+        tag: "Onboarding",
+        heading: "Welcome to Serum",
+        subheading: "Your personal AI design assistant.",
+        body: "Swipe through to see how Serum can help you generate beautiful UI prompts in seconds. Let's get started with a quick tour of the features.",
+        button: "CONTINUE"
+    }
+};
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initPresetPicker(); // Initialize project type presets
@@ -531,6 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCollapsibles(); // Initialize collapsible sections
     initAnimations(); // Initialize staggered animations
     initAppTheme(); // Initialize app-wide dark mode toggle
+    initSidebarCollapse(); // Initialize sidebar collapse toggle
 
     document.getElementById('regenerate-btn').addEventListener('click', generatePrompt);
     document.getElementById('copy-btn').addEventListener('click', copyToClipboard);
@@ -543,6 +597,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial Trigger
     updatePreview();
+
+    // Stitch UI Wiring
+    const toggleStitch = document.getElementById('toggle-stitch');
+    const contentStitch = document.getElementById('content-stitch');
+    const iconStitch = document.getElementById('icon-stitch');
+    const stitchEnabled = document.getElementById('stitch-enabled');
+    const stitchApiKey = document.getElementById('stitch-api-key');
+
+    // Load persisted API key
+    if (localStorage.getItem('stitch-api-key')) {
+        stitchApiKey.value = localStorage.getItem('stitch-api-key');
+    }
+
+    // Persist API key on change
+    stitchApiKey.addEventListener('input', (e) => {
+        localStorage.setItem('stitch-api-key', e.target.value);
+    });
+
+    toggleStitch.addEventListener('click', () => {
+        const isHidden = contentStitch.classList.contains('hidden');
+        contentStitch.classList.toggle('hidden');
+        iconStitch.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(-90deg)';
+    });
+
+    // Stitch Tab Switching
+    const stitchTabs = document.querySelectorAll('#stitch-tabs button');
+    stitchTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.tab;
+
+            // Update buttons
+            stitchTabs.forEach(t => {
+                t.classList.remove('bg-white', 'dark:bg-gray-700', 'text-gray-900', 'dark:text-white', 'shadow-sm');
+                t.classList.add('text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-200');
+            });
+            tab.classList.add('bg-white', 'dark:bg-gray-700', 'text-gray-900', 'dark:text-white', 'shadow-sm');
+            tab.classList.remove('text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-200');
+
+            // Update content
+            document.getElementById('stitch-preview-tab').classList.toggle('hidden', target !== 'preview');
+            document.getElementById('stitch-code-tab').classList.toggle('hidden', target !== 'code');
+        });
+    });
+
+    // Code Copy
+    document.getElementById('stitch-copy-code').addEventListener('click', () => {
+        const code = document.getElementById('stitch-code-output').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            const btn = document.getElementById('stitch-copy-code');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-green-500"></i><span class="text-[10px] font-bold uppercase tracking-wider text-green-500">Copied!</span>';
+            lucide.createIcons();
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                lucide.createIcons();
+            }, 2000);
+        });
+    });
+
+    // Retry Button
+    document.getElementById('stitch-retry-btn').addEventListener('click', generatePrompt);
 });
 
 // Initialize Layout Prompt Builder (New)
@@ -1187,6 +1302,7 @@ function updatePreview() {
 
     const theme = document.getElementById('theme-pref').value;
     const accentColor = document.getElementById('selected-color').value;
+    const paletteKey = document.getElementById('color-palette')?.value || 'modern';
 
     // Elements
     const container = document.getElementById('preview-container');
@@ -1260,11 +1376,55 @@ function updatePreview() {
         }
     }
 
-    btn.style.backgroundColor = accentColor;
+    // Apply Palette Colors to Tag (Visual Feedback)
+    if (tag && palettes[paletteKey]) {
+        const pColors = palettes[paletteKey].colors;
+
+        // 1. apply colors to the Tag
+        tag.style.backgroundColor = pColors[1];
+        tag.style.color = pColors[2];
+
+        // 2. Apply primary color to the Button (Overriding manual accent if palette is active context)
+        // We will assume the palette's primary color is the intended accent
+        btn.style.backgroundColor = pColors[0];
+
+        // 3. Apply a subtle gradient to the container background
+        const hexToRgba = (hex, alpha) => {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        };
+
+        const bgGradient = `linear-gradient(135deg, ${hexToRgba(pColors[0], 0.05)} 0%, ${hexToRgba(pColors[1], 0.1)} 100%)`;
+        container.style.backgroundImage = bgGradient;
+
+        container.style.borderColor = hexToRgba(pColors[0], 0.3);
+        container.style.borderWidth = '1px';
+        container.style.borderStyle = 'solid';
+
+    } else {
+        // Reset manual accent
+        btn.style.backgroundColor = accentColor;
+        container.style.backgroundImage = 'none';
+        container.style.borderWidth = '0px';
+    }
+
+    // Apply Content Updates based on Purpose (Real-time content preview)
+    const purposeVal = document.getElementById('layout-purpose')?.value || 'website';
+    const contentData = previewContent[purposeVal] || previewContent.website;
+    const userReq = document.getElementById('user-requirement')?.value.trim();
+
+    if (heading) heading.textContent = userReq ? userReq : contentData.heading;
+    if (subheading) subheading.textContent = contentData.subheading;
+    if (body) body.textContent = contentData.body;
+    if (btn) btn.textContent = contentData.button;
+    if (tag) tag.textContent = contentData.tag;
 }
 
 function generatePrompt() {
     // General Settings
+    const userRequirement = document.getElementById('user-requirement').value.trim();
     const style = document.getElementById('visual-style').value;
     const theme = document.getElementById('theme-pref').value;
     const colorHex = document.getElementById('selected-color').value;
@@ -1334,7 +1494,7 @@ function generatePrompt() {
     const animationPrompt = getAnimationPrompt();
 
     const prompt = `
-> Create a modern and professional user interface design.
+> ${userRequirement ? userRequirement : "Create a modern and professional user interface design."}
 
 **Visual Style & Theme**
 ${styleDesc}
@@ -1365,6 +1525,11 @@ ${professionalRules}
     output.classList.remove('animate-fade-in');
     void output.offsetWidth; // trigger reflow
     output.classList.add('animate-fade-in');
+
+    // Trigger Stitch if enabled
+    if (document.getElementById('stitch-enabled').checked) {
+        executeStitchGeneration(prompt.trim());
+    }
 }
 
 function copyToClipboard() {
@@ -1421,6 +1586,33 @@ function initCollapsibles() {
     setupToggle('toggle-preview', 'content-preview', 'icon-preview');
 }
 
+function initSidebarCollapse() {
+    const sidebar = document.getElementById('sidebar');
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    const expandBtn = document.getElementById('sidebar-expand-btn');
+
+    function collapse() {
+        sidebar.style.width = '0';
+        sidebar.style.minWidth = '0';
+        sidebar.style.overflow = 'hidden';
+        sidebar.style.borderRight = 'none';
+        expandBtn.classList.remove('hidden');
+        lucide.createIcons();
+    }
+
+    function expand() {
+        sidebar.style.width = '';
+        sidebar.style.minWidth = '';
+        sidebar.style.overflow = '';
+        sidebar.style.borderRight = '';
+        expandBtn.classList.add('hidden');
+        lucide.createIcons();
+    }
+
+    if (collapseBtn) collapseBtn.addEventListener('click', collapse);
+    if (expandBtn) expandBtn.addEventListener('click', expand);
+}
+
 function initAppTheme() {
     const toggleBtn = document.getElementById('app-theme-toggle');
     const html = document.documentElement;
@@ -1445,5 +1637,194 @@ function initAppTheme() {
                 localStorage.setItem('serum-theme', 'dark');
             }
         });
+    }
+}
+// End of file
+
+/**
+ * StitchClient - Comprehensive API interface for Stitch UI Generation
+ */
+class StitchClient {
+    constructor(apiKey) {
+        this.apiKey = apiKey;
+        this.endpoint = "https://stitchapi.affra.com.my/mcp";
+    }
+
+    async _rpc(method, params = {}) {
+        const response = await fetch(this.endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': this.apiKey
+            },
+            body: JSON.stringify({
+                jsonrpc: "2.0",
+                id: Date.now(),
+                method,
+                params
+            })
+        });
+
+        const data = await response.json();
+        if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+        return data.result;
+    }
+
+    // MCP helper to call specific tools via tools/call
+    async _callTool(toolName, toolArgs = {}) {
+        const result = await this._rpc("tools/call", {
+            name: toolName,
+            arguments: toolArgs
+        });
+
+        // MCP tools/call returns { content: [{ type: 'text', text: '...' }] }
+        if (result && result.content && result.content[0] && result.content[0].text) {
+            try {
+                // Return parsed JSON if possible, otherwise raw text
+                return JSON.parse(result.content[0].text);
+            } catch (e) {
+                return result.content[0].text;
+            }
+        }
+
+        // If it's already an error or doesn't match expected format
+        if (result && result.isError) {
+            throw new Error(result.content?.[0]?.text || "Tool execution failed");
+        }
+
+        return result;
+    }
+
+    async initialize() {
+        return this._rpc("initialize", {
+            capabilities: {},
+            clientInfo: { name: "Serum", version: "1.2" },
+            protocolVersion: "2024-11-05"
+        });
+    }
+
+    async createProject(title = "Serum UI Generation") {
+        return this._callTool("create_project", { title });
+    }
+
+    async generateScreen(projectId, prompt, deviceType = "DESKTOP", modelId = "GEMINI_3_FLASH") {
+        return this._callTool("generate_screen_from_text", {
+            projectId,
+            prompt,
+            deviceType,
+            modelId
+        });
+    }
+
+    async getScreen(projectId, screenId) {
+        const name = `projects/${projectId}/screens/${screenId}`;
+        return this._callTool("get_screen", {
+            name,
+            projectId,
+            screenId
+        });
+    }
+}
+
+/**
+ * Orchestrates the full Stitch generation sequence
+ */
+async function executeStitchGeneration(generatedPrompt) {
+    const isEnabled = document.getElementById('stitch-enabled').checked;
+    const apiKey = document.getElementById('stitch-api-key').value;
+    const deviceType = document.getElementById('stitch-device').value;
+    const modelId = document.getElementById('stitch-model').value;
+
+    if (!isEnabled || !apiKey) return;
+
+    // UI State: Reset and Show
+    const resultsPanel = document.getElementById('stitch-results');
+    const loadingOverlay = document.getElementById('stitch-loading');
+    const statusText = document.getElementById('stitch-status');
+    const errorState = document.getElementById('stitch-error');
+    const errorMsg = document.getElementById('stitch-error-msg');
+    const iframe = document.getElementById('stitch-iframe');
+    const codeOutput = document.getElementById('stitch-code-output');
+    const spinner = document.getElementById('stitch-loading-spinner');
+
+    resultsPanel.classList.remove('hidden');
+    loadingOverlay.classList.remove('hidden');
+    errorState.classList.add('hidden');
+    spinner.classList.remove('hidden');
+    screenShotContainer.classList.add('hidden');
+
+    // Scroll to results
+    resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    try {
+        const client = new StitchClient(apiKey);
+
+        statusText.textContent = "Connecting to Stitch...";
+        await client.initialize();
+
+        statusText.textContent = "Starting new UI project...";
+        const projectRes = await client.createProject();
+        const projectId = (projectRes.projectId || projectRes.name || "").split('/').pop();
+
+        statusText.textContent = "Brewing your interface...";
+        const genRes = await client.generateScreen(projectId, generatedPrompt, deviceType, modelId);
+
+        // Extract screenId from outputComponents -> design -> screens
+        let screenId = null;
+        if (genRes.outputComponents?.[0]?.design?.screens?.[0]) {
+            const screen = genRes.outputComponents[0].design.screens[0];
+            screenId = screen.id || (screen.name ? screen.name.split('/').pop() : null);
+        } else if (genRes.name) {
+            screenId = genRes.name.split('/').pop();
+        }
+
+        if (!screenId) throw new Error("Could not retrieve Screen ID from generation.");
+
+        statusText.textContent = "Finalizing artifacts...";
+
+        const screenData = await client.getScreen(projectId, screenId);
+
+        // Final screen details can come from the Tool output of generateScreen OR get_screen
+        const finalScreen = screenData.htmlCode ? screenData : (genRes.outputComponents?.[0]?.design?.screens?.[0] || screenData);
+
+        // Render Result: Preview
+        if (finalScreen.htmlCode?.downloadUrl) {
+            const proxiedUrl = finalScreen.htmlCode.downloadUrl.replace('https://contribution.usercontent.google.com', 'https://stitchapi.affra.com.my');
+            const authUrl = proxiedUrl + (proxiedUrl.includes('?') ? '&' : '?') + "key=" + apiKey;
+            // Load preview via iframe navigation (works without CORS)
+            iframe.src = authUrl;
+
+            // Try to fetch source for the code tab
+            try {
+                const htmlRes = await fetch(authUrl);
+                if (!htmlRes.ok) {
+                    throw new Error(`Status ${htmlRes.status}`);
+                }
+                const htmlContent = await htmlRes.text();
+                codeOutput.textContent = htmlContent;
+                // Also render via srcdoc for a self-contained preview
+                iframe.srcdoc = htmlContent;
+            } catch (e) {
+                console.warn("Could not fetch code content for code tab:", e);
+                // Leave iframe.src intact (preview still works), only update code tab
+                codeOutput.textContent = "<!-- Code view unavailable. Preview is loaded in the Preview tab. -->";
+            }
+        } else if (finalScreen.htmlContent) {
+            iframe.srcdoc = finalScreen.htmlContent;
+            codeOutput.textContent = finalScreen.htmlContent;
+        }
+
+        // Complete
+        loadingOverlay.classList.add('hidden');
+        spinner.classList.add('hidden');
+        lucide.createIcons();
+
+    } catch (err) {
+        console.error("Stitch Error:", err);
+        loadingOverlay.classList.add('hidden');
+        spinner.classList.add('hidden');
+        errorState.classList.remove('hidden');
+        errorMsg.textContent = err.message || "An unexpected error occurred.";
+        lucide.createIcons();
     }
 }
