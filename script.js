@@ -1751,7 +1751,6 @@ async function executeStitchGeneration(generatedPrompt) {
     loadingOverlay.classList.remove('hidden');
     errorState.classList.add('hidden');
     spinner.classList.remove('hidden');
-    screenShotContainer.classList.add('hidden');
 
     // Scroll to results
     resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
