@@ -54,16 +54,23 @@
     <main class="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
 
         <!-- LEFT PANEL: Controls (Inspector) -->
-        <aside
-            class="w-full md:w-[400px] flex-none border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 md:overflow-y-auto bg-white dark:bg-gray-900 custom-scrollbar transition-colors duration-300">
-            <div class="p-6 space-y-8">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">Configuration
-                    </h1>
-                    <p
-                        class="text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-500 text-sm leading-relaxed transition-colors">
-                        Customize your design system preferences below.
-                    </p>
+        <aside id="sidebar"
+            class="w-full md:w-[400px] flex-none border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 md:overflow-y-auto bg-white dark:bg-gray-900 custom-scrollbar transition-all duration-300 ease-in-out relative">
+            <div class="p-6 space-y-8 min-w-[400px]">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">Configuration
+                        </h1>
+                        <p
+                            class="text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-500 text-sm leading-relaxed transition-colors">
+                            Customize your design system preferences below.
+                        </p>
+                    </div>
+                    <button id="sidebar-collapse-btn"
+                        class="flex-none mt-1 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer"
+                        aria-label="Collapse sidebar" title="Collapse sidebar">
+                        <i data-lucide="panel-left-close" class="w-4 h-4"></i>
+                    </button>
                 </div>
 
                 <form id="serum-form" class="space-y-8">
@@ -1927,6 +1934,13 @@
         <div
             class="flex-1 md:overflow-y-auto bg-gray-50 dark:bg-gray-950/50 custom-scrollbar p-4 sm:p-6 md:p-8 lg:p-12 relative flex flex-col gap-6 md:gap-8 items-center transition-colors duration-300">
 
+            <!-- Sidebar Expand Button (visible when collapsed) -->
+            <button id="sidebar-expand-btn"
+                class="hidden fixed left-0 top-1/2 -translate-y-1/2 z-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg rounded-r-xl px-1.5 py-3 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all cursor-pointer"
+                aria-label="Expand sidebar" title="Expand sidebar">
+                <i data-lucide="panel-left-open" class="w-4 h-4"></i>
+            </button>
+
             <!-- Live Preview Frame -->
             <div class="w-full max-w-4xl space-y-4">
                 <button type="button"
@@ -2077,9 +2091,6 @@
                             sandbox="allow-scripts allow-same-origin"></iframe>
                         <div class="h-12 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700 flex items-center px-4 justify-between">
                             <span class="text-[10px] font-mono text-gray-400 uppercase tracking-widest">Instant UI Artifact</span>
-                            <div id="stitch-screenshot-container" class="hidden">
-                                <img id="stitch-screenshot" class="h-8 rounded border border-gray-200 dark:border-gray-600 cursor-zoom-in" alt="UI Thumbnail">
-                            </div>
                         </div>
                     </div>
 

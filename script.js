@@ -584,6 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCollapsibles(); // Initialize collapsible sections
     initAnimations(); // Initialize staggered animations
     initAppTheme(); // Initialize app-wide dark mode toggle
+    initSidebarCollapse(); // Initialize sidebar collapse toggle
 
     document.getElementById('regenerate-btn').addEventListener('click', generatePrompt);
     document.getElementById('copy-btn').addEventListener('click', copyToClipboard);
@@ -1585,6 +1586,33 @@ function initCollapsibles() {
     setupToggle('toggle-preview', 'content-preview', 'icon-preview');
 }
 
+function initSidebarCollapse() {
+    const sidebar = document.getElementById('sidebar');
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    const expandBtn = document.getElementById('sidebar-expand-btn');
+
+    function collapse() {
+        sidebar.style.width = '0';
+        sidebar.style.minWidth = '0';
+        sidebar.style.overflow = 'hidden';
+        sidebar.style.borderRight = 'none';
+        expandBtn.classList.remove('hidden');
+        lucide.createIcons();
+    }
+
+    function expand() {
+        sidebar.style.width = '';
+        sidebar.style.minWidth = '';
+        sidebar.style.overflow = '';
+        sidebar.style.borderRight = '';
+        expandBtn.classList.add('hidden');
+        lucide.createIcons();
+    }
+
+    if (collapseBtn) collapseBtn.addEventListener('click', collapse);
+    if (expandBtn) expandBtn.addEventListener('click', expand);
+}
+
 function initAppTheme() {
     const toggleBtn = document.getElementById('app-theme-toggle');
     const html = document.documentElement;
@@ -1718,7 +1746,6 @@ async function executeStitchGeneration(generatedPrompt) {
     const iframe = document.getElementById('stitch-iframe');
     const codeOutput = document.getElementById('stitch-code-output');
     const spinner = document.getElementById('stitch-loading-spinner');
-    const screenShotContainer = document.getElementById('stitch-screenshot-container');
 
     resultsPanel.classList.remove('hidden');
     loadingOverlay.classList.remove('hidden');
@@ -1785,18 +1812,6 @@ async function executeStitchGeneration(generatedPrompt) {
         } else if (finalScreen.htmlContent) {
             iframe.srcdoc = finalScreen.htmlContent;
             codeOutput.textContent = finalScreen.htmlContent;
-        }
-
-        // Render Result: Screenshot
-        let screenshotUrl = finalScreen.screenshot?.downloadUrl || finalScreen.screenshotUri;
-        if (screenshotUrl) {
-            // Proxied screenshot URL to avoid potential CORS/access issues
-            screenshotUrl = screenshotUrl.replace('https://lh3.googleusercontent.com', 'https://stitchapi.affra.com.my');
-            const authScreenshotUrl = screenshotUrl + (screenshotUrl.includes('?') ? '&' : '?') + "key=" + apiKey;
-
-            const img = document.getElementById('stitch-screenshot');
-            img.src = authScreenshotUrl;
-            screenShotContainer.classList.remove('hidden');
         }
 
         // Complete
