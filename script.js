@@ -1412,8 +1412,9 @@ function updatePreview() {
     // Apply Content Updates based on Purpose (Real-time content preview)
     const purposeVal = document.getElementById('layout-purpose')?.value || 'website';
     const contentData = previewContent[purposeVal] || previewContent.website;
+    const userReq = document.getElementById('user-requirement')?.value.trim();
 
-    if (heading) heading.textContent = contentData.heading;
+    if (heading) heading.textContent = userReq ? userReq : contentData.heading;
     if (subheading) subheading.textContent = contentData.subheading;
     if (body) body.textContent = contentData.body;
     if (btn) btn.textContent = contentData.button;
@@ -1422,6 +1423,7 @@ function updatePreview() {
 
 function generatePrompt() {
     // General Settings
+    const userRequirement = document.getElementById('user-requirement').value.trim();
     const style = document.getElementById('visual-style').value;
     const theme = document.getElementById('theme-pref').value;
     const colorHex = document.getElementById('selected-color').value;
@@ -1491,7 +1493,7 @@ function generatePrompt() {
     const animationPrompt = getAnimationPrompt();
 
     const prompt = `
-> Create a modern and professional user interface design.
+> ${userRequirement ? userRequirement : "Create a modern and professional user interface design."}
 
 **Visual Style & Theme**
 ${styleDesc}
